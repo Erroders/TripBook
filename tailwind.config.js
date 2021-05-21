@@ -8,10 +8,12 @@ module.exports = {
                     black: '#262626',
                     gray: '#FAFAFA',
                     blue: '#3897F0',
+                    white: '#FFFFFF',
                 },
             },
             spacing: {
                 header: '56px',
+                tripCoverImage: '60vh',
             },
             fontFamily: {
                 display: ['Source Sans Pro', 'sans-serif'],
