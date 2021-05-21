@@ -10,7 +10,7 @@ const UserIndicator: React.FC = () => {
                         alt=""
                         className="h-userProfilePicSmall rounded-full border border-primary-blue"
                     />
-                    <span className="my-auto text-base font-semibold ml-2">unicef</span>
+                    <span className="my-auto text-lg font-semibold ml-2">unicef</span>
                 </a>
             </div>
         </>

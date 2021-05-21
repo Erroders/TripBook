@@ -9,6 +9,9 @@ module.exports = {
                     gray: '#FAFAFA',
                     blue: '#3897F0',
                     white: '#FFFFFF',
+                    text: {
+                        gray: 'rgba(0, 0, 0, 0.4)',
+                    },
                 },
             },
             spacing: {

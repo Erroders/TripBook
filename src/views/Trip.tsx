@@ -2,11 +2,12 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import UserIndicator from '../components/Trip/UserIndicator';
+import TripDetails from '../components/Trip/TripDetails';
 
 const Trip: React.FC = () => {
     return (
-        <>
-            <div className="bg-purple-400 relative text-primary-white">
+        <div>
+            <div className="bg-purple-400 relative text-primary-white font-display">
                 <button className="top-2 absolute px-4 py-2 focus:outline-none">
                     <FontAwesomeIcon icon={faTimes} size="2x" />
                 </button>
@@ -22,10 +23,13 @@ const Trip: React.FC = () => {
                     }}
                 >
                     <span className="font-medium text-sm uppercase">6 Posts</span>
-                    <h1 className="text-4xl font-medium">Coping During Covid: Guide to Heaven</h1>
+                    <h1 className="text-4xl font-semibold">Coping During Covid: Guide to Heaven</h1>
                     <UserIndicator />
                 </div>
             </div>
+
+            <TripDetails />
+
             <div>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde, ullam? Tempore, eos? Delectus inventore,
                 assumenda architecto ipsa deserunt accusantium iure placeat sint minus eius veritatis aut voluptas
@@ -51,7 +55,7 @@ const Trip: React.FC = () => {
                 cupiditate alias cumque eligendi repellat sed quae atque nulla totam dolorem, labore eaque unde nemo,
                 enim quos molestias? Esse.
             </div>
-        </>
+        </div>
     );
 };
 
