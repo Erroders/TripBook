@@ -1,16 +1,21 @@
 import React from 'react';
 
-const UserIndicator: React.FC = () => {
+interface UserIndicatorProps {
+    userProfilePicSrc: string;
+    username: string;
+}
+
+const UserIndicator: React.FC<UserIndicatorProps> = ({ userProfilePicSrc, username }: UserIndicatorProps) => {
     return (
         <>
             <div className="flex mt-2">
                 <a href="#" className="flex">
                     <img
-                        src="http://picsum.photos/64"
-                        alt=""
+                        src={userProfilePicSrc}
+                        alt="User Profile Picture"
                         className="h-userProfilePicSmall rounded-full border border-primary-blue"
                     />
-                    <span className="my-auto text-lg font-semibold ml-2">unicef</span>
+                    <span className="my-auto text-lg font-semibold ml-2">{username}</span>
                 </a>
             </div>
         </>

@@ -13,7 +13,7 @@ const Trip: React.FC = () => {
                 </button>
                 <img
                     src="https://picsum.photos/512"
-                    alt="Cover Image"
+                    alt="Trip Cover Image"
                     className="h-tripCoverImage object-cover object-center"
                 />
                 <div
@@ -24,11 +24,15 @@ const Trip: React.FC = () => {
                 >
                     <span className="font-medium text-sm uppercase">6 Posts</span>
                     <h1 className="text-4xl font-semibold">Coping During Covid: Guide to Heaven</h1>
-                    <UserIndicator />
+                    <UserIndicator userProfilePicSrc="http://picsum.photos/64" username="unicef" />
                 </div>
             </div>
 
-            <TripDetails />
+            <TripDetails
+                tripDetails="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Molestias alias error aspernatur dolor nam sit
+                debitis possimus."
+                lastUpdated={new Date('27 June 2020')}
+            />
 
             <div>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde, ullam? Tempore, eos? Delectus inventore,
