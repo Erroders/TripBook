@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
-import { HomeLayout } from './layouts/HomeLayout';
+import HomeLayout from './layouts/MainLayout';
 
 const App: React.FC = () => {
     return (
