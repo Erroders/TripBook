@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import UserIndicator from '../components/Trip/UserIndicator';
 import TripDetails from '../components/Trip/TripDetails';
+import Post from '../components/Trip/Post';
 
 const Trip: React.FC = () => {
     return (
@@ -12,7 +13,7 @@ const Trip: React.FC = () => {
                     <FontAwesomeIcon icon={faTimes} size="2x" />
                 </button>
                 <img
-                    src="https://picsum.photos/512"
+                    src="https://user-images.githubusercontent.com/50939480/119163329-effb5580-ba78-11eb-83e5-012223957839.jpg"
                     alt="Trip Cover Image"
                     className="h-tripCoverImage object-cover object-center"
                 />
@@ -23,41 +24,57 @@ const Trip: React.FC = () => {
                     }}
                 >
                     <span className="font-medium text-sm uppercase">6 Posts</span>
-                    <h1 className="text-4xl font-semibold">Coping During Covid: Guide to Heaven</h1>
-                    <UserIndicator userProfilePicSrc="http://picsum.photos/64" username="unicef" />
+                    <h1 className="text-4xl font-semibold">Coping During COVID‑19</h1>
+
+                    <UserIndicator
+                        userProfilePicSrc="https://user-images.githubusercontent.com/50939480/119163355-f689cd00-ba78-11eb-961e-53efaf5c1ab4.jpg"
+                        username="unicef"
+                    />
                 </div>
             </div>
 
             <TripDetails
-                tripDetails="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Molestias alias error aspernatur dolor nam sit
-                debitis possimus."
+                tripDetails="Six tips on looking after yourself and staying connected during the #COVID19 pandemic."
                 lastUpdated={new Date('27 June 2020')}
             />
 
             <div>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde, ullam? Tempore, eos? Delectus inventore,
-                assumenda architecto ipsa deserunt accusantium iure placeat sint minus eius veritatis aut voluptas
-                quibusdam error repellendus illum vel et repudiandae fugiat sequi quaerat amet reprehenderit recusandae
-                aspernatur! Accusantium debitis ut beatae amet non hic praesentium soluta earum nam, mollitia quis
-                laudantium enim at quia explicabo rerum. Nostrum accusantium placeat, dignissimos iusto unde totam
-                numquam. Cumque neque quidem voluptates at blanditiis, minima est velit necessitatibus ratione aperiam
-                totam ex sed obcaecati similique inventore ipsam quo laudantium accusamus accusantium quod nam
-                perferendis aliquid maiores. Praesentium sint sit fugit error ab placeat laboriosam obcaecati! Dolore
-                laudantium repellat voluptatem suscipit quae, asperiores reiciendis quidem perferendis cupiditate
-                doloremque dolorem voluptate commodi maxime quo quibusdam quasi, rem ex facere. Optio, distinctio.
-                Aliquam quos laborum, fugit doloremque necessitatibus ratione unde repudiandae excepturi deleniti sunt
-                sint, cupiditate dolore ab sequi incidunt assumenda eligendi molestiae magni natus, aut possimus. Saepe,
-                ut! Nesciunt suscipit tempore aut dolores placeat itaque quidem dignissimos esse numquam reprehenderit
-                magni fuga fugiat quos et saepe odio repellendus, vel ullam earum! Porro aliquam fugit minus, earum
-                deleniti beatae accusantium sit quam eveniet qui ipsam, harum at cum, totam repudiandae ea temporibus
-                quod? Dicta ad odio ipsum quos quis earum dolor ex labore omnis nisi reprehenderit, perferendis vitae
-                hic voluptatum deleniti iste molestias nostrum cumque excepturi ea. Quae odit facere eum unde
-                consequuntur voluptate autem, necessitatibus nisi! Doloremque dolorem obcaecati, minus sed ipsa officia
-                voluptas deserunt necessitatibus ad animi possimus voluptate, commodi consequatur nulla temporibus.
-                Quasi animi, eius facilis quas ullam culpa itaque excepturi. Et repudiandae culpa asperiores est sed
-                numquam vel deserunt, quidem eius aliquid reprehenderit. Magni et neque assumenda voluptatum qui tenetur
-                cupiditate alias cumque eligendi repellat sed quae atque nulla totam dolorem, labore eaque unde nemo,
-                enim quos molestias? Esse.
+                <Post
+                    index={1}
+                    title="Process your feelings"
+                    caption="For anyone feeling anxious, isolated and disappointed, know this: you are not alone. Processing feelings looks different for everyone. What’s important is that you do what feels right for you."
+                    postImgSrc="https://user-images.githubusercontent.com/50939480/119163320-ee319200-ba78-11eb-8182-d573ca8b567e.jpg"
+                />
+                <Post
+                    index={2}
+                    title="Take time to reflect"
+                    caption="When you're under difficult conditions, it can be helpful to divide problems into two categories: things I can do something about, and things I can do nothing about. There is a lot that falls under that second category right now, and that’s okay. "
+                    postImgSrc="https://user-images.githubusercontent.com/50939480/119163329-effb5580-ba78-11eb-83e5-012223957839.jpg"
+                />
+                <Post
+                    index={3}
+                    title="Keep moving"
+                    caption="If you are spending more time at home, it’s important to keep moving. Regular exercise has numerous benefits for your body and mind. If you can, try to exercise daily. "
+                    postImgSrc="https://user-images.githubusercontent.com/50939480/119163335-f12c8280-ba78-11eb-846f-0fa122c063a2.jpg"
+                />
+                <Post
+                    index={4}
+                    title="Share kind notes"
+                    caption="Playing our part might mean we are apart, but together we can fill the space between us with kindness and support."
+                    postImgSrc="https://user-images.githubusercontent.com/50939480/119163339-f25daf80-ba78-11eb-9687-e4a054be9002.jpg"
+                />
+                <Post
+                    index={5}
+                    title="Brighten up your community"
+                    caption="Bring joy to your neighbours and show your appreciation for essential workers and other everyday heroes by decorating your windows. "
+                    postImgSrc="https://user-images.githubusercontent.com/50939480/119163344-f38edc80-ba78-11eb-850c-34a405a898b3.jpg"
+                />
+                <Post
+                    index={6}
+                    title="Get creative... and breathe"
+                    caption="Have you been wanting to learn how to do something new, like mindfulness or drawing? Now is the time to do just that. Focusing on yourself and finding ways to use your new‑found time is a productive way to look after your mental health."
+                    postImgSrc="https://user-images.githubusercontent.com/50939480/119163348-f4c00980-ba78-11eb-80ec-ded478003422.jpg"
+                />
             </div>
         </div>
     );
