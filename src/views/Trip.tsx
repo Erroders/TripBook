@@ -1,22 +1,30 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import UserIndicator from '../components/Trip/UserIndicator';
 
 const Trip: React.FC = () => {
     return (
         <>
             <div className="bg-purple-400 relative text-primary-white">
+                <button className="top-2 absolute px-4 py-2 focus:outline-none">
+                    <FontAwesomeIcon icon={faTimes} size="2x" />
+                </button>
                 <img
                     src="https://picsum.photos/512"
                     alt="Cover Image"
                     className="h-tripCoverImage object-cover object-center"
                 />
-                <h1
-                    className="bottom-2 absolute text-4xl font-semibold p-4"
+                <div
+                    className="bottom-2 absolute p-4"
                     style={{
                         textShadow: '2px 2px 10px rgba(0, 0, 0, 1)',
                     }}
                 >
-                    Coping During Covid: Guide to Heaven
-                </h1>
+                    <span className="font-medium text-sm uppercase">6 Posts</span>
+                    <h1 className="text-4xl font-medium">Coping During Covid: Guide to Heaven</h1>
+                    <UserIndicator />
+                </div>
             </div>
             <div>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde, ullam? Tempore, eos? Delectus inventore,

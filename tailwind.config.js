@@ -14,6 +14,7 @@ module.exports = {
             spacing: {
                 header: '56px',
                 tripCoverImage: '60vh',
+                userProfilePicSmall: '2.2rem',
             },
             fontFamily: {
                 display: ['Source Sans Pro', 'sans-serif'],
