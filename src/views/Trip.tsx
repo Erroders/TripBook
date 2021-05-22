@@ -1,6 +1,4 @@
 import React, { useRef } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import UserIndicator from '../components/Trip/UserIndicator';
 import TripDetails from '../components/Trip/TripDetails';
 import Post from '../components/Trip/Post';
@@ -15,7 +13,15 @@ const Trip: React.FC = () => {
             <div ref={scrollTopDiv} />
             <div className="bg-purple-400 relative text-primary-white font-display">
                 <button className="top-2 absolute px-4 py-2 focus:outline-none">
-                    <FontAwesomeIcon icon={faTimes} size="2x" />
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-7 w-7"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                    >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
                 </button>
                 <img
                     src={data.coverImage}
@@ -51,10 +57,10 @@ const Trip: React.FC = () => {
                 })}
             </div>
             <div
-                className="fixed bg-purple-800 bottom-6 right-6 z-50 rounded-full flex justify-center bg-opacity-70 text-primary-white"
+                className="fixed bg-primary-text-gray bottom-6 right-6 z-50 rounded-full flex justify-center bg-opacity-70 text-primary-white"
                 style={{
-                    height: '15vw',
-                    width: '15vw',
+                    height: '12vw',
+                    width: '12vw',
                 }}
                 onClick={() =>
                     console.log(
@@ -66,7 +72,15 @@ const Trip: React.FC = () => {
                     )
                 }
             >
-                <FontAwesomeIcon icon={faChevronUp} size="2x" className="my-auto " />
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-8 w-8 my-auto"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
+                </svg>
             </div>
         </div>
     );
