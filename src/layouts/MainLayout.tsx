@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { TABS } from '../assets/themes/variables';
-import Footer from '../components/Footer';
-import Header from '../components/Header';
+import Footer from '../components/Layout/Footer';
+import Header from '../components/Layout/Header';
 
 const HomeLayout: React.FC = () => {
     const [currentTab, setCurrentTab] = useState<TABS>(TABS.FEED);
@@ -33,6 +33,7 @@ const HomeLayout: React.FC = () => {
                 Ipsum vitae quos quaerat! Iure dignissimos adipisci magnam porro quisquam vitae saepe eos ullam neque,
                 animi veritatis dolore! Odio, veritatis magni commodi deserunt cumque mollitia minus esse.
             </main>
+
             <Footer selectedTab={currentTab} setSelectedTab={setCurrentTab} />
         </>
     );

@@ -1,5 +1,5 @@
 import React from 'react';
-import { TABS } from '../assets/themes/variables';
+import { TABS } from '../../assets/themes/variables';
 
 interface FooterProps {
     selectedTab: TABS;
