@@ -9,7 +9,7 @@ const HomeLayout: React.FC = () => {
     return (
         <>
             <Header />
-            <main>
+            <main className="min-h-screen">
                 Home Layout Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem, iure. Necessitatibus
                 delectus nam temporibus ut? Quisquam impedit fuga quod unde similique consectetur asperiores in ex quos
                 eveniet nobis perspiciatis necessitatibus velit, quae, officia quasi, qui est deleniti officiis? Vitae
