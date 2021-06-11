@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
 import HomeLayout from './layouts/MainLayout';
 import Trip from './views/Trip';
+// import Trip from './views/Trip';
 
 const App: React.FC = () => {
     return (
@@ -12,6 +13,7 @@ const App: React.FC = () => {
                     <Route path="/home" exact={true}>
                         <HomeLayout />
                     </Route>
+
                     <Route path="/:user/:tripId" exact={true}>
                         <Trip />
                     </Route>

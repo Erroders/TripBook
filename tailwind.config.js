@@ -18,6 +18,8 @@ module.exports = {
                 header: '56px',
                 tripCoverImage: '60vh',
                 userProfilePicSmall: '2.2rem',
+                userProfilePicBig: '15vh',
+                userStatsGap: '2vh',
             },
             fontFamily: {
                 display: ['Source Sans Pro', 'sans-serif'],

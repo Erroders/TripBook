@@ -1,4 +1,6 @@
 import { TRIP_DATA } from '../models/TripData';
+import { USER_DATA } from '../models/UserData';
+
 
 type getTripDataProps = (username: string, tripId: string) => TRIP_DATA;
 
@@ -12,8 +14,8 @@ export const getTripData: getTripDataProps = (username, tripId) => {
         username: username,
         userProfilePhotoUrl:
             'https://user-images.githubusercontent.com/50939480/119163355-f689cd00-ba78-11eb-961e-53efaf5c1ab4.jpg',
-        details: 'Six tips on looking after yourself and staying connected during the #COVID19 pandemic.',
-        lastUpdated: new Date('27 June 2020'),
+        details: 'Six tips on looking after yourself and staying connected with each other during the #COVID19 pandemic situations. Six tips on looking after yourself and staying connected with each other during the #COVID19 pandemic situations.',
+        lastUpdated: new Date('27 May 2021'),
         posts: [
             {
                 index: 1,
@@ -74,3 +76,59 @@ export const getTripData: getTripDataProps = (username, tripId) => {
 
     return tripData;
 };
+
+
+
+type getUserDataProps = (username: string) => USER_DATA;
+
+export const getUserData : getUserDataProps = (username) => {
+    const tripData : USER_DATA = {
+        username: username,
+        firstName: 'Sparsh',
+        lastName: 'Agarwal',
+        email: 'akathecoder@gmail.com',
+        bio:'Tripper | Blogger | The best things come from living outside of your comfort zone',
+        noOfTrips: 6,
+        userProfilePhotoUrl:
+            'https://wallpapercave.com/wp/wp4288429.jpg',
+        followers: [
+            {
+                username: 'Raghav Goyal',
+                userProfilePhotoUrl: 'https://user-images.githubusercontent.com/50939480/119163320-ee319200-ba78-11eb-8182-d573ca8b567e.jpg',
+            },
+            {
+                username: 'Vineet Sharma',
+                userProfilePhotoUrl: 'https://wallpapercave.com/wp/wp4288429.jpg',
+            },
+            {
+                username: 'Nonit Mittal',
+                userProfilePhotoUrl: 'https://user-images.githubusercontent.com/50939480/119163320-ee319200-ba78-11eb-8182-d573ca8b567e.jpg',
+            },
+            {
+                username: 'Priya Kaushik',
+                userProfilePhotoUrl: 'https://wallpapercave.com/wp/wp4288429.jpg',
+            },
+            {
+                username: 'Garima Gaur',
+                userProfilePhotoUrl: 'https://user-images.githubusercontent.com/50939480/119163320-ee319200-ba78-11eb-8182-d573ca8b567e.jpg',
+            }
+            
+        ],
+        followings: [
+            {
+                username: 'Raghav Goyal',
+                userProfilePhotoUrl: 'https://user-images.githubusercontent.com/50939480/119163320-ee319200-ba78-11eb-8182-d573ca8b567e.jpg',
+            },
+            {
+                username: 'Nonit Mittal',
+                userProfilePhotoUrl: 'https://wallpapercave.com/wp/wp4288429.jpg',
+            },
+            {
+                username: 'Vineet Sharma',
+                userProfilePhotoUrl: 'https://user-images.githubusercontent.com/50939480/119163320-ee319200-ba78-11eb-8182-d573ca8b567e.jpg',
+            },
+        ]
+    };
+
+    return tripData;
+}
