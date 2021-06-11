@@ -1,14 +1,21 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import TripDetails from '../components/Trip/TripDetails';
 import Post from '../components/Trip/Post';
 import { getTripData } from '../utils/getTripData';
 import EndCredit from '../components/Trip/EndCredit';
 import FAB from '../components/Trip/Fab';
 import CoverImage from '../components/Trip/CoverImage';
+import { useParams } from 'react-router-dom';
 
 const Trip: React.FC = () => {
-    const data = getTripData('unicef', 'adasd');
+    const { tripId } = useParams<{ tripId: string }>();
+
+    const data = getTripData('unicef', tripId);
     const scrollTopDiv = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
 
     return (
         <div>
