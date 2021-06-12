@@ -1,26 +1,34 @@
-import React, { useState } from 'react';
-import { TABS } from '../assets/themes/variables';
+import React from 'react';
 import Footer from '../components/Layout/Footer';
 import Header from '../components/Layout/Header';
 import HomeFeed from '../views/HomeFeed';
 import UserProfile from '../views/UserProfile';
+import { useLocation } from 'react-router-dom';
 
 const HomeLayout: React.FC = () => {
-    const [currentTab, setCurrentTab] = useState<TABS>(TABS.FEED);
+    const { pathname } = useLocation();
 
     const view = () => {
-        if (currentTab === TABS.FEED) {
-            return <HomeFeed />;
-        } else if (currentTab === TABS.EXPLORE) {
-            return <HomeFeed />;
-        } else if (currentTab === TABS.CREATE) {
-            return <HomeFeed />;
-        } else if (currentTab === TABS.NOTIFICATIONS) {
-            return <HomeFeed />;
-        } else if (currentTab === TABS.PROFILE) {
-            return <UserProfile />;
-        } else {
-            return <HomeFeed />;
+        switch (pathname.slice(1)) {
+            case 'home':
+                return <HomeFeed />;
+                break;
+            case 'explore':
+                return <HomeFeed />;
+                break;
+            case 'add':
+                return <HomeFeed />;
+                break;
+            case 'notifications':
+                return <HomeFeed />;
+                break;
+            case 'profile':
+                return <UserProfile />;
+                break;
+
+            default:
+                return <HomeFeed />;
+                break;
         }
     };
 
@@ -30,7 +38,7 @@ const HomeLayout: React.FC = () => {
 
             <main className="min-h-screen">{view()}</main>
 
-            <Footer selectedTab={currentTab} setSelectedTab={setCurrentTab} />
+            <Footer selectedTab={pathname.slice(1)} />
         </div>
     );
 };
