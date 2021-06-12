@@ -8,18 +8,14 @@ interface Props {
 
 const UserTrips: React.FC<Props> = ({ trips }: Props) => {
     return (
-        <div className="p-2 grid grid-cols-3 gap-1">
+        <div className="pb-14 grid grid-cols-3 gap-0.5 p-0.5">
             {trips.map((trip) => {
                 return (
-                    <Link to={`/trip/${trip.id}`} key={trip.id}>
-                        <div className="flex justify-center">
-                            <img
-                                src={trip.coverImage}
-                                alt="Trip Cover Image"
-                                className="h-tripCoverImageProfileheight w-tripCoverImageProfilewidth object-cover"
-                            />
-                        </div>
-                    </Link>
+                    <div key={trip.id} className="flex justify-center">
+                        <Link to={`/trip/${trip.id}`} key={trip.id}>
+                            <img src={trip.coverImage} alt="Trip Cover Image" className="object-cover h-full w-full" />
+                        </Link>
+                    </div>
                 );
             })}
         </div>

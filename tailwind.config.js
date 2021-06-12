@@ -20,8 +20,6 @@ module.exports = {
                 userProfilePicSmall: '2.2rem',
                 userProfilePicBig: '15vh',
                 userStatsGap: '2vh',
-                tripCoverImageProfilewidth: '30vh',
-                tripCoverImageProfileheight: '15vh',
             },
             fontFamily: {
                 display: ['Source Sans Pro', 'sans-serif'],
