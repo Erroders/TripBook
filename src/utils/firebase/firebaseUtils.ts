@@ -12,13 +12,13 @@ export enum Collection {
 
 /** Adds document to the given collection reference.
  If 'id' is not provided in the data object (second parameter) firestore aotomatically generates it.*/
-export function addDocument<Document extends { id?: string }>(
+export async function addDocument<Document extends { id?: string }>(
     collectionRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>,
     { id, ...data }: Document,
     merge = true,
-): void {
+): Promise<void> {
     if (id) {
-        collectionRef
+        await collectionRef
             .doc(id)
             .set(data, { merge: merge })
             .then(() => {
@@ -28,7 +28,7 @@ export function addDocument<Document extends { id?: string }>(
                 console.error('Error writing document: ', error);
             });
     } else {
-        collectionRef
+        await collectionRef
             .add(data)
             .then((docRef) => {
                 console.log('Document written with ID: ', docRef.id);
@@ -41,11 +41,11 @@ export function addDocument<Document extends { id?: string }>(
 // -----------------------------------------------------------------------------
 
 /** Deletes document in the provided collection reference with the given document id.*/
-export function deleteDocument(
+export async function deleteDocument(
     collectionRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>,
     id: string,
-): void {
-    collectionRef
+): Promise<void> {
+    await collectionRef
         .doc(id)
         .delete()
         .then(() => {
@@ -58,11 +58,11 @@ export function deleteDocument(
 // -----------------------------------------------------------------------------
 
 /** Retrieves document in the provided collection reference with the given document id.*/
-export function getDocument(
+export async function getDocument(
     collectionRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>,
     id: string,
 ): Promise<void | firebase.firestore.DocumentData | undefined> {
-    return collectionRef
+    return await collectionRef
         .doc(id)
         .get()
         .then((doc) => {
@@ -81,10 +81,10 @@ export function getDocument(
 // -----------------------------------------------------------------------------
 
 /** Retrieves all the documents in the provided collection reference.*/
-export function getAllDocument(
+export async function getAllDocument(
     collectionRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>,
 ): Promise<firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData>> {
-    return collectionRef.get().then((querySnapshot) => {
+    return await collectionRef.get().then((querySnapshot) => {
         console.log('Documents :', querySnapshot);
         return querySnapshot;
     });
@@ -92,11 +92,11 @@ export function getAllDocument(
 // -----------------------------------------------------------------------------
 
 /** Updates document in the provided collection reference with the given document id. It modifies fields provided in the data without overwriting the existing data.*/
-export function updateDocument<Document extends { id: string }>(
+export async function updateDocument<Document extends { id: string }>(
     collectionRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>,
     { id, ...data }: Document,
-): void {
-    collectionRef
+): Promise<void> {
+    await collectionRef
         .doc(id)
         .update(data)
         .then(() => {
