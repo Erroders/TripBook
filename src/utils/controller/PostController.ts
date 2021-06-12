@@ -49,14 +49,16 @@ export function createPost(username: string, tripId: string, post: POST & { id?:
 // -----------------------------------------------------------------------------
 
 // Get all posts of a trip
-export function getPosts(tripRef: firebase.firestore.DocumentReference<firebase.firestore.DocumentData>): Array<POST> {
+export async function getPosts(
+    tripRef: firebase.firestore.DocumentReference<firebase.firestore.DocumentData>,
+): Promise<Array<POST>> {
     const posts: POST[] = [];
-    FIREBASE_UTILS.getAllDocument(tripRef.collection(FIREBASE_UTILS.Collection.POSTS)).then((postDocs) => {
+    return await FIREBASE_UTILS.getAllDocument(tripRef.collection(FIREBASE_UTILS.Collection.POSTS)).then((postDocs) => {
         postDocs.forEach((post) => {
-            posts.push(postConverter.fromFirestore(post));
+            posts.push(postConverter.fromFirestore(post.data()));
         });
+        return posts;
     });
-    return posts;
 }
 // -----------------------------------------------------------------------------
 
