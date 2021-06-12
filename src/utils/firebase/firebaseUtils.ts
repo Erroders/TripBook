@@ -1,7 +1,8 @@
 // Imports
-import firebase from './firebase';
+import firebase, { storage } from './firebase';
 // -----------------------------------------------------------------------------
 
+// ================================FIRESTORE====================================
 // Enum Collection
 export enum Collection {
     USERS = 'USERS',
@@ -67,8 +68,8 @@ export async function getDocument(
         .get()
         .then((doc) => {
             if (doc.exists) {
-                console.log('Document data:', doc.data());
-                return doc.data();
+                console.log('Document data:', { id: doc.id, ...doc.data() });
+                return { id: doc.id, ...doc.data() };
             } else {
                 console.log('No such document!');
                 return;
@@ -83,10 +84,10 @@ export async function getDocument(
 /** Retrieves all the documents in the provided collection reference.*/
 export async function getAllDocument(
     collectionRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>,
-): Promise<firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData>> {
+): Promise<firebase.firestore.QueryDocumentSnapshot<firebase.firestore.DocumentData>[]> {
     return await collectionRef.get().then((querySnapshot) => {
-        console.log('Documents :', querySnapshot);
-        return querySnapshot;
+        console.log('Documents :', querySnapshot.docs);
+        return querySnapshot.docs;
     });
 }
 // -----------------------------------------------------------------------------
@@ -107,3 +108,54 @@ export async function updateDocument<Document extends { id: string }>(
         });
 }
 // -----------------------------------------------------------------------------
+
+// =================================STORAGE=====================================
+const storageRef = storage.ref();
+
+// upload file
+export async function uploadFile(
+    fileRef: firebase.storage.Reference,
+    file: Blob | Uint8Array | ArrayBuffer,
+): Promise<string> {
+    return await fileRef
+        .put(file)
+        .then((snapshot) => {
+            console.log('Uploaded a blob or file!');
+            return snapshot.ref.getDownloadURL();
+        })
+        .catch((error) => {
+            console.error('Error occured while uploading the file!!', error);
+        });
+}
+
+// download file
+export async function downloadFile(fileRef: firebase.storage.Reference): Promise<void> {
+    await fileRef.delete();
+    storageRef
+        .child('images/stars.jpg')
+        .getDownloadURL()
+        .then((url) => {
+            const xhr = new XMLHttpRequest();
+            xhr.responseType = 'blob';
+            xhr.onload = (event) => {
+                const blob = xhr.response;
+            };
+            xhr.open('GET', url);
+            xhr.send();
+        })
+        .catch((error) => {
+            console.error('Error occured while deleting the file!!', error);
+        });
+}
+
+// delete file
+export async function deleteFile(fileRef: firebase.storage.Reference): Promise<void> {
+    await fileRef
+        .delete()
+        .then(() => {
+            console.log('File deleted successfully!');
+        })
+        .catch((error) => {
+            console.error('Error occured while deleting the file!!', error);
+        });
+}
