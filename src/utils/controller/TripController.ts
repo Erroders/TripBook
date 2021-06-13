@@ -3,6 +3,7 @@ import * as FIREBASE_UTILS from '../firebase/firebaseUtils';
 import { TRIP_DATA, POST } from '../../models/TripData';
 import firebase, { firestore, storage } from '../firebase/firebase';
 import { getPosts } from './PostController';
+import { getUser } from './UserController';
 // -----------------------------------------------------------------------------
 
 class Trip implements TRIP_DATA {
@@ -157,3 +158,27 @@ export async function uploadTripCoverImage(
     );
 }
 // -----------------------------------------------------------------------------
+
+// Set currentTrip
+export async function setCurrentTrip(username: string, tripId: string): Promise<boolean> {
+    return await FIREBASE_UTILS.updateDocument(firestore.collection(FIREBASE_UTILS.Collection.USERS), {
+        id: username,
+        currentTrip: tripId,
+    })
+        .then(() => {
+            console.log(`${username} : currentTrip set to ${tripId}`);
+            return true;
+        })
+        .catch(() => {
+            return false;
+        });
+}
+
+// Get currentTrip
+export async function getCurrentTrip(username: string): Promise<string | undefined> {
+    return await getUser(username).then((user) => {
+        if (user) {
+            return user.currentTrip;
+        }
+    });
+}
