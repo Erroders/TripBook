@@ -137,8 +137,8 @@ export async function downloadFile(fileRef: firebase.storage.Reference): Promise
         .then((url) => {
             const xhr = new XMLHttpRequest();
             xhr.responseType = 'blob';
-            xhr.onload = (event) => {
-                const blob = xhr.response;
+            xhr.onload = (_event) => {
+                // const blob = xhr.response;
             };
             xhr.open('GET', url);
             xhr.send();
