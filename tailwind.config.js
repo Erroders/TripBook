@@ -20,6 +20,7 @@ module.exports = {
                 userProfilePicSmall: '2.2rem',
                 userProfilePicBig: '15vh',
                 userStatsGap: '2vh',
+                coverImageProfileHeight: '18vh',
             },
             fontFamily: {
                 display: ['Source Sans Pro', 'sans-serif'],
