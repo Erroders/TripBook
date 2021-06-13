@@ -67,11 +67,18 @@ const tripConverter = {
 // -----------------------------------------------------------------------------
 
 // Create trip for a user
-export function createTrip(username: string, trip: TRIP_DATA): void {
-    FIREBASE_UTILS.addDocument(
+export async function createTrip(username: string, trip: TRIP_DATA): Promise<boolean> {
+    return await FIREBASE_UTILS.addDocument(
         firestore.collection(FIREBASE_UTILS.Collection.USERS).doc(username).collection(FIREBASE_UTILS.Collection.TRIPS),
-        trip,
-    );
+        tripConverter.toFireStore(trip),
+    )
+        .then(() => {
+            return true;
+        })
+        .catch((error) => {
+            console.error('Error while creating trip', error);
+            return false;
+        });
 }
 // -----------------------------------------------------------------------------
 
@@ -103,11 +110,18 @@ export async function getTrip(username: string, tripId: string): Promise<TRIP_DA
 // -----------------------------------------------------------------------------
 
 // Delete a trip
-export function deleteTrip(username: string, tripId: string): void {
-    FIREBASE_UTILS.deleteDocument(
+export async function deleteTrip(username: string, tripId: string): Promise<boolean> {
+    return await FIREBASE_UTILS.deleteDocument(
         firestore.collection(FIREBASE_UTILS.Collection.USERS).doc(username).collection(FIREBASE_UTILS.Collection.TRIPS),
         tripId,
-    );
+    )
+        .then(() => {
+            return true;
+        })
+        .catch((error) => {
+            console.error('Error while deleting trip', error);
+            return false;
+        });
 }
 // -----------------------------------------------------------------------------
 
