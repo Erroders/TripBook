@@ -1,20 +1,38 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import TripDetails from '../components/Trip/TripDetails';
 import Post from '../components/Trip/Post';
-import { getTripData } from '../utils/getTripData';
 import EndCredit from '../components/Trip/EndCredit';
 import FAB from '../components/Trip/Fab';
 import CoverImage from '../components/Trip/CoverImage';
 import { useParams } from 'react-router-dom';
+import { TRIP_DATA } from '../models/TripData';
+import { getTrip } from '../utils/controller/TripController';
 
 const Trip: React.FC = () => {
-    const { tripId } = useParams<{ tripId: string }>();
+    const { userId, tripId } = useParams<{ userId: string; tripId: string }>();
 
-    const data = getTripData('unicef', tripId);
+    const [data, setData] = useState<TRIP_DATA>({
+        id: '',
+        coverImage: '',
+        title: '',
+        noOfPosts: 0,
+        username: '',
+        userProfilePhotoUrl: '',
+        details: '',
+        lastUpdated: new Date(),
+        posts: [],
+    });
     const scrollTopDiv = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
         window.scrollTo(0, 0);
+        if (userId && tripId) {
+            getTrip(userId, tripId).then((data) => {
+                if (data) {
+                    setData(data);
+                }
+            });
+        }
     }, []);
 
     return (

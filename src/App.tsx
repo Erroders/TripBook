@@ -12,7 +12,7 @@ const App: React.FC = () => {
                     <Route path={['/home', '/explore', '/add', '/notifications', '/profile']}>
                         <HomeLayout />
                     </Route>
-                    <Route path="/user/:tripId" exact={true}>
+                    <Route path="/user/:userId/:tripId" exact={true}>
                         <Trip />
                     </Route>
                     <Redirect from="/" to="/home" />
