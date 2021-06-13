@@ -1,16 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { XBackButton } from '../components/EditTrip/XBackButton';
-import ClickButton from '../components/General/ClickButton';
 import { PlusIcon } from '@heroicons/react/outline';
-import { createPost, uploadPostImage } from '../utils/controller/PostController';
-import { useParams } from 'react-router';
 import { v4 as uuidv4 } from 'uuid';
-import { POST } from '../models/TripData';
+import { createTrip, uploadTripCoverImage } from '../../utils/controller/TripController';
+import { TRIP_DATA } from '../../models/TripData';
+import { XBackButton } from '../EditTrip/XBackButton';
+import ClickButton from '../General/ClickButton';
 
-const EditTrip: React.FC = () => {
-    const { userId, tripId, index } = useParams<{ userId: string; tripId: string; index: string }>();
+const CreateTrip: React.FC = () => {
     const imageRef = useRef<HTMLInputElement>(null);
 
+    const [userId, setUserId] = useState('');
     const [imageUrl, setImageUrl] = useState('');
     const [title, setTitle] = useState('');
     const [details, setDetails] = useState('');
@@ -20,12 +19,17 @@ const EditTrip: React.FC = () => {
 
     useEffect(() => {
         setFileName(uuidv4());
+
+        // TODO: Connect with auth
+        setUserId('akathecoder');
     }, []);
 
     const handleImageUpload = () => {
-        uploadPostImage(userId, tripId, fileName, imageRef.current?.files?.item(0)).then((value) => {
-            setImageUrl(value);
-        });
+        if (userId && fileName) {
+            uploadTripCoverImage(userId, uuidv4(), fileName, imageRef.current?.files?.item(0)).then((value) => {
+                setImageUrl(value);
+            });
+        }
     };
 
     const checkImage = (): boolean => {
@@ -36,17 +40,20 @@ const EditTrip: React.FC = () => {
     };
 
     const handleSubmit = () => {
-        if (!title || !details || !checkImage()) {
+        if (!title || !details || !checkImage() || !userId) {
             return;
         }
 
-        console.log('ddddddddddddd');
-        createPost(userId, tripId, {
+        createTrip(userId, {
+            coverImage: imageUrl,
+            details: details,
             title: title,
-            caption: details,
-            postsUrl: [imageUrl],
-            index: Number.parseInt(index),
-        } as POST).then((value) => {
+            noOfPosts: 0,
+            username: userId,
+            userProfilePhotoUrl: '',
+            lastUpdated: new Date(),
+            posts: [],
+        } as TRIP_DATA).then((value) => {
             if (value) {
                 console.log('Moment Uploaded', {
                     imageUrl,
@@ -63,7 +70,7 @@ const EditTrip: React.FC = () => {
                 <div className="absolute mx-4">
                     <XBackButton />
                 </div>
-                <h1 className="text-xl mx-auto text-center font-medium">Add Moment</h1>
+                <h1 className="text-xl mx-auto text-center font-medium">Start Trip</h1>
             </div>
 
             <div className="p-2">
@@ -138,4 +145,4 @@ const EditTrip: React.FC = () => {
     );
 };
 
-export default EditTrip;
+export default CreateTrip;

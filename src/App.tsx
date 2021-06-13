@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import CreateTrip from './components/AddTrip/CreateTrip';
 
 import HomeLayout from './layouts/MainLayout';
 import EditTrip from './views/EditTrip';
@@ -16,8 +17,11 @@ const App: React.FC = () => {
                     <Route path="/user/:userId/:tripId" exact={true}>
                         <Trip />
                     </Route>
-                    <Route path="/user/:userId/edit/:tripId" exact={true}>
+                    <Route path="/user/:userId/edit/:tripId/:index" exact={true}>
                         <EditTrip />
+                    </Route>
+                    <Route path="/createTrip" exact={true}>
+                        <CreateTrip />
                     </Route>
                     <Redirect from="/" to="/home" />
                     <Route />
