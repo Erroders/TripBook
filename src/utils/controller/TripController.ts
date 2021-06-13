@@ -1,7 +1,7 @@
 // Imports
 import * as FIREBASE_UTILS from '../firebase/firebaseUtils';
 import { TRIP_DATA, POST } from '../../models/TripData';
-import firebase, { firestore } from '../firebase/firebase';
+import firebase, { firestore, storage } from '../firebase/firebase';
 import { getPosts } from './PostController';
 // -----------------------------------------------------------------------------
 
@@ -140,5 +140,20 @@ export async function getAllTrips(username: string): Promise<Trip[] | null> {
             return null;
         }
     });
+}
+// -----------------------------------------------------------------------------
+
+// Upload trip coverImage
+export async function uploadTripCoverImage(
+    username: string,
+    tripId: string,
+    fileName: string,
+    file: Blob | Uint8Array | ArrayBuffer,
+): Promise<string> {
+    return await FIREBASE_UTILS.uploadFile(storage.ref(`${username}/${tripId}/${fileName}`), file).then(
+        (downloadUrl) => {
+            return downloadUrl;
+        },
+    );
 }
 // -----------------------------------------------------------------------------
