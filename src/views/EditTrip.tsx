@@ -1,24 +1,60 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { XBackButton } from '../components/EditTrip/XBackButton';
 import ClickButton from '../components/General/ClickButton';
 import { PlusIcon } from '@heroicons/react/outline';
+import { createPost, uploadPostImage } from '../utils/controller/PostController';
+import { useParams } from 'react-router';
+import { v4 as uuidv4 } from 'uuid';
+import { POST } from '../models/TripData';
 
 const EditTrip: React.FC = () => {
+    const { userId, tripId, index } = useParams<{ userId: string; tripId: string; index: string }>();
     const imageRef = useRef<HTMLInputElement>(null);
 
     const [imageUrl, setImageUrl] = useState('');
     const [title, setTitle] = useState('');
     const [details, setDetails] = useState('');
+    const [fileName, setFileName] = useState('');
+
+    const errorImage = 'https://cdn.pixabay.com/photo/2017/11/10/05/24/add-2935429_960_720.png';
+
+    useEffect(() => {
+        setFileName(uuidv4());
+    }, []);
 
     const handleImageUpload = () => {
-        // TODO: Upload Image and set it here
-        setImageUrl(
-            'https://images.unsplash.com/photo-1604051189201-700f955d1cf8?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
-        );
+        uploadPostImage(userId, tripId, fileName, imageRef.current?.files?.item(0)).then((value) => {
+            setImageUrl(value);
+        });
+    };
+
+    const checkImage = (): boolean => {
+        if (!imageUrl || imageUrl === errorImage) {
+            return false;
+        }
+        return true;
     };
 
     const handleSubmit = () => {
-        console.log();
+        if (!title || !details || !checkImage()) {
+            return;
+        }
+
+        console.log('ddddddddddddd');
+        createPost(userId, tripId, {
+            title: title,
+            caption: details,
+            postsUrl: [imageUrl],
+            index: Number.parseInt(index),
+        } as POST).then((value) => {
+            if (value) {
+                console.log('Moment Uploaded', {
+                    imageUrl,
+                    title,
+                    details,
+                });
+            }
+        });
     };
 
     return (
@@ -30,7 +66,7 @@ const EditTrip: React.FC = () => {
                 <h1 className="text-xl mx-auto text-center font-medium">Add Moment</h1>
             </div>
 
-            <div className="p-2 flex">
+            <div className="p-2">
                 <input
                     type="file"
                     name="momentInput"
@@ -40,16 +76,18 @@ const EditTrip: React.FC = () => {
                     onChange={handleImageUpload}
                     ref={imageRef}
                 />
-                <label htmlFor="momentInput" className="mx-auto">
-                    <img
-                        src={imageUrl}
-                        alt="Moment Image"
-                        onError={() => {
-                            setImageUrl('https://cdn.pixabay.com/photo/2017/11/10/05/24/add-2935429_960_720.png');
-                        }}
-                        className="object-cover w-80 h-80"
-                    />
-                </label>
+                <div className="flex h-72">
+                    <label htmlFor="momentInput" className="mx-auto my-auto">
+                        <img
+                            src={imageUrl}
+                            alt="Moment Image"
+                            onError={() => {
+                                setImageUrl(errorImage);
+                            }}
+                            className="object-cover max-h-72"
+                        />
+                    </label>
+                </div>
             </div>
 
             <div className="p-2">
