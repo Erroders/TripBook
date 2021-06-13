@@ -8,7 +8,7 @@ interface TripDetailsProps {
 
 const TripDetails: React.FC<TripDetailsProps> = ({ tripDetails, lastUpdated }: TripDetailsProps) => {
     return (
-        <div className="px-4 py-8">
+        <div className="px-4 py-6">
             <p className="text-lg font-display">{tripDetails}</p>
             <p className="my-2 font-display text-primary-text-gray">
                 {'Last updated ' +
