@@ -1,7 +1,7 @@
 // Imports
 import * as FIREBASE_UTILS from '../firebase/firebaseUtils';
 import { POST } from '../../models/TripData';
-import firebase, { firestore } from '../firebase/firebase';
+import firebase, { firestore, storage } from '../firebase/firebase';
 // -----------------------------------------------------------------------------
 
 // Post class
@@ -115,5 +115,21 @@ export async function updatePost(
             console.error('Error while updating post', error);
             return false;
         });
+}
+// -----------------------------------------------------------------------------
+
+// Upload postImage
+export async function uploadPostImage(
+    username: string,
+    tripId: string,
+    postId: string,
+    fileName: string,
+    file: Blob | Uint8Array | ArrayBuffer,
+): Promise<string> {
+    return await FIREBASE_UTILS.uploadFile(storage.ref(`${username}/${tripId}/${postId}/${fileName}`), file).then(
+        (downloadUrl) => {
+            return downloadUrl;
+        },
+    );
 }
 // -----------------------------------------------------------------------------
