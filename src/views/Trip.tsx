@@ -7,6 +7,8 @@ import CoverImage from '../components/Trip/CoverImage';
 import { useParams } from 'react-router-dom';
 import { TRIP_DATA } from '../models/TripData';
 import { getTrip } from '../utils/controller/TripController';
+import Button from '../components/General/Button';
+import { PencilAltIcon } from '@heroicons/react/outline';
 
 const Trip: React.FC = () => {
     const { userId, tripId } = useParams<{ userId: string; tripId: string }>();
@@ -47,6 +49,18 @@ const Trip: React.FC = () => {
                 username={data.username}
             />
 
+            <div className="px-4 pt-6">
+                {
+                    // TODO: Add auth confirmation
+                    true && (
+                        <Button
+                            link={`/user/${data.username}/edit/${data.id}`}
+                            text="Edit Trip"
+                            heroIcon={<PencilAltIcon />}
+                        />
+                    )
+                }
+            </div>
             <TripDetails tripDetails={data.details} lastUpdated={data.lastUpdated} />
 
             <div>

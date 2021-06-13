@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
 import HomeLayout from './layouts/MainLayout';
+import EditTrip from './views/EditTrip';
 import Trip from './views/Trip';
 
 const App: React.FC = () => {
@@ -14,6 +15,9 @@ const App: React.FC = () => {
                     </Route>
                     <Route path="/user/:userId/:tripId" exact={true}>
                         <Trip />
+                    </Route>
+                    <Route path="/user/:userId/edit/:tripId" exact={true}>
+                        <EditTrip />
                     </Route>
                     <Redirect from="/" to="/home" />
                     <Route />
