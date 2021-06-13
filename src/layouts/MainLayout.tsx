@@ -4,6 +4,9 @@ import Header from '../components/Layout/Header';
 import HomeFeed from '../views/HomeFeed';
 import UserProfile from '../views/UserProfile';
 import { useLocation } from 'react-router-dom';
+import AddView from '../views/AddView';
+import Explore from '../views/Explore';
+import Notifications from '../views/Notifications';
 
 const HomeLayout: React.FC = () => {
     const { pathname } = useLocation();
@@ -14,13 +17,13 @@ const HomeLayout: React.FC = () => {
                 return <HomeFeed />;
                 break;
             case 'explore':
-                return <HomeFeed />;
+                return <Explore />;
                 break;
             case 'add':
-                return <HomeFeed />;
+                return <AddView />;
                 break;
             case 'notifications':
-                return <HomeFeed />;
+                return <Notifications />;
                 break;
             case 'profile':
                 return <UserProfile />;
