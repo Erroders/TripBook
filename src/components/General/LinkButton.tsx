@@ -1,13 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-interface ButtonProps {
+interface LinkButtonProps {
     heroIcon: JSX.Element;
     link: string;
     text: string;
 }
 
-const Button: React.FC<ButtonProps> = ({ heroIcon, link, text }: ButtonProps) => {
+const LinkButton: React.FC<LinkButtonProps> = ({ heroIcon, link, text }: LinkButtonProps) => {
     console.log(link);
 
     return (
@@ -23,4 +23,4 @@ const Button: React.FC<ButtonProps> = ({ heroIcon, link, text }: ButtonProps) =>
     );
 };
 
-export default Button;
+export default LinkButton;
