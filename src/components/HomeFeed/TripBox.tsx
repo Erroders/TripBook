@@ -36,7 +36,7 @@ const TripBox: React.FC<ThumbnailProps> = ({
                     <span className="my-auto text-lg font-semibold tracking-wide ml-2">{username}</span>
                 </a>
             </div>
-            <Link to={`/trip/${id}`}>
+            <Link to={`/user/${username}/${id}`}>
                 {/* Cover Image */}
                 <div className="flex justify-center">
                     <img src={coverImage} alt="Trip Cover Image" className="object-cover" />
