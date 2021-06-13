@@ -18,6 +18,7 @@ const UserProfile: React.FC = () => {
         followers: [],
         followings: [],
         noOfTrips: 0,
+        currentTrip: '',
     });
 
     const [tripData, settripData] = useState<TRIP_DATA[]>([]);
@@ -37,6 +38,7 @@ const UserProfile: React.FC = () => {
                     followers: [],
                     followings: [],
                     noOfTrips: 0,
+                    currentTrip: '',
                 });
             }
         });

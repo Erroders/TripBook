@@ -14,6 +14,7 @@ class User implements USER_DATA {
     followers: Array<USER_FOLLOW>;
     followings: Array<USER_FOLLOW>;
     noOfTrips: number;
+    currentTrip: string;
 
     // constructor
     constructor(
@@ -26,6 +27,7 @@ class User implements USER_DATA {
         followers: Array<USER_FOLLOW>,
         followings: Array<USER_FOLLOW>,
         noOfTrips: number,
+        currentTrip: string,
     ) {
         this.username = username;
         this.firstName = firstName;
@@ -36,6 +38,7 @@ class User implements USER_DATA {
         this.followers = followers;
         this.followings = followings;
         this.noOfTrips = noOfTrips;
+        this.currentTrip = currentTrip;
     }
 }
 
@@ -57,6 +60,7 @@ const userConverter = {
             userData.followers,
             userData.followings,
             userData.noOfTrips,
+            userData.currentTrip,
         );
     },
 };
