@@ -1,5 +1,5 @@
 import React from 'react';
-import { TABS } from '../assets/themes/variables';
+import { TABS } from '../../assets/themes/variables';
 
 interface FooterProps {
     selectedTab: TABS;
@@ -7,10 +7,8 @@ interface FooterProps {
 }
 
 const Footer: React.FC<FooterProps> = ({ selectedTab, setSelectedTab }: FooterProps) => {
-    console.log(selectedTab, setSelectedTab);
-
     return (
-        <footer className="grid grid-cols-5 bg-primary-gray h-header text-xl font-semibold font-display w-full sticky bottom-0 z-50">
+        <footer className="grid grid-cols-5 bg-primary-gray h-header text-xl font-semibold font-display md:w-2/3 lg:w-1/3 w-full fixed bottom-0 z-50 border-t border-gray-300">
             <div className={`text-center self-center`} onClick={() => setSelectedTab(TABS.FEED)}>
                 {selectedTab === TABS.FEED ? (
                     <svg
@@ -74,7 +72,7 @@ const Footer: React.FC<FooterProps> = ({ selectedTab, setSelectedTab }: FooterPr
                 {selectedTab === TABS.CREATE ? (
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="h-6 w-6 inline-block"
+                        className="h-9 w-9 inline-block"
                         viewBox="0 0 20 20"
                         fill="currentColor"
                     >
@@ -87,7 +85,7 @@ const Footer: React.FC<FooterProps> = ({ selectedTab, setSelectedTab }: FooterPr
                 ) : (
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="h-6 w-6 inline-block"
+                        className="h-9 w-9 inline-block"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"

@@ -18,7 +18,7 @@ const CoverImage: React.FC<CoverImageProps> = ({
 }: CoverImageProps) => {
     return (
         <div className="bg-purple-400 relative text-primary-white font-display">
-            <button className="top-2 absolute px-4 py-2 focus:outline-none">
+            <button className="top-2 absolute px-4 py-2 focus:outline-none" onClick={() => window.history.back()}>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-7 w-7"
