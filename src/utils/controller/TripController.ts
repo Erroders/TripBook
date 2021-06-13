@@ -1,7 +1,7 @@
 // Imports
 import * as FIREBASE_UTILS from '../firebase/firebaseUtils';
 import { TRIP_DATA, POST } from '../../models/TripData';
-import { firestore } from '../firebase/firebase';
+import firebase, { firestore } from '../firebase/firebase';
 import { getPosts } from './PostController';
 // -----------------------------------------------------------------------------
 
@@ -47,7 +47,7 @@ const tripConverter = {
     toFireStore: function (trip: TRIP_DATA) {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { posts, ...tripData } = trip;
-        return tripData;
+        return { ...tripData, lastUpdated: firebase.firestore.FieldValue.serverTimestamp() };
     },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     fromFirestore: function (tripData: any | TRIP_DATA, posts: Array<POST>) {
@@ -59,7 +59,7 @@ const tripConverter = {
             tripData.username,
             tripData.userProfilePhotoUrl,
             tripData.details,
-            tripData.lastUpdated,
+            new Date(tripData.lastUpdated.seconds * 1000),
             posts,
         );
     },
@@ -76,24 +76,29 @@ export function createTrip(username: string, trip: TRIP_DATA): void {
 // -----------------------------------------------------------------------------
 
 // Get trip data of a user
-export function getTrip(username: string, tripId: string): TRIP_DATA | null {
-    let tripData = null;
-    FIREBASE_UTILS.getDocument(
+export async function getTrip(username: string, tripId: string): Promise<TRIP_DATA | null> {
+    let tripData: Trip;
+    return await FIREBASE_UTILS.getDocument(
         firestore.collection(FIREBASE_UTILS.Collection.USERS).doc(username).collection(FIREBASE_UTILS.Collection.TRIPS),
         tripId,
-    ).then((data) => {
-        if (data) {
-            const posts = getPosts(
+    ).then((tripDoc) => {
+        if (tripDoc) {
+            const postData = getPosts(
                 firestore
                     .collection(FIREBASE_UTILS.Collection.USERS)
                     .doc(username)
                     .collection(FIREBASE_UTILS.Collection.TRIPS)
                     .doc(tripId),
             );
-            tripData = tripConverter.fromFirestore(data, posts);
+
+            return postData.then((posts) => {
+                tripData = tripConverter.fromFirestore(tripDoc, posts);
+                return tripData;
+            });
+        } else {
+            return null;
         }
     });
-    return tripData;
 }
 // -----------------------------------------------------------------------------
 
@@ -107,25 +112,19 @@ export function deleteTrip(username: string, tripId: string): void {
 // -----------------------------------------------------------------------------
 
 // Get all trips of a user
-export function getAllTrips(username: string): Trip[] | null {
+export async function getAllTrips(username: string): Promise<Trip[] | null> {
     const trips: Trip[] = [];
-    FIREBASE_UTILS.getAllDocument(
+    return await FIREBASE_UTILS.getAllDocument(
         firestore.collection(FIREBASE_UTILS.Collection.USERS).doc(username).collection(FIREBASE_UTILS.Collection.TRIPS),
     ).then((tripDocs) => {
-        if (tripDocs.size !== 0) {
+        if (tripDocs.length !== 0) {
             tripDocs.forEach((tripDoc) => {
-                const posts = getPosts(
-                    firestore
-                        .collection(FIREBASE_UTILS.Collection.USERS)
-                        .doc(username)
-                        .collection(FIREBASE_UTILS.Collection.TRIPS)
-                        .doc(tripDoc.id),
-                );
-                trips.push(tripConverter.fromFirestore(tripDoc, posts));
+                trips.push(tripConverter.fromFirestore({ id: tripDoc.id, ...tripDoc.data() }, []));
             });
             return trips;
+        } else {
+            return null;
         }
     });
-    return null;
 }
 // -----------------------------------------------------------------------------

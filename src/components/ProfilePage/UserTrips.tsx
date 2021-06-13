@@ -1,46 +1,23 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
+import { TRIP_DATA } from '../../models/TripData';
+import React from 'react';
 
-interface ITripsProps {
-    coverImage: string;
-    tripId: string;
+interface Props {
+    trips: TRIP_DATA[];
 }
 
-const UserTrips: React.FC<ITripsProps> = ({ coverImage, tripId }: ITripsProps) => {
-    console.log(tripId);
-
+const UserTrips: React.FC<Props> = ({ trips }: Props) => {
     return (
-        <div className="py-5 px-2 grid grid-cols-3 gap-1">
-            <Link to={`/trip/${tripId}`}>
-                {/* Cover Image */}
-                <div className="flex justify-center">
-                    <img src={coverImage} alt="Trip Cover Image" className="h-full w-full object-cover" />
-                </div>
-            </Link>
-            <Link to={`/trip/${tripId}`}>
-                {/* Cover Image */}
-                <div className="flex justify-center">
-                    <img src={coverImage} alt="Trip Cover Image" className="h-full w-full object-cover" />
-                </div>
-            </Link>
-            <Link to={`/trip/${tripId}`}>
-                {/* Cover Image */}
-                <div className="flex justify-center">
-                    <img src={coverImage} alt="Trip Cover Image" className="h-full w-full object-cover" />
-                </div>
-            </Link>
-            <Link to={`/trip/${tripId}`}>
-                {/* Cover Image */}
-                <div className="flex justify-center">
-                    <img src={coverImage} alt="Trip Cover Image" className="h-full w-full object-cover" />
-                </div>
-            </Link>
-            <Link to={`/trip/${tripId}`}>
-                {/* Cover Image */}
-                <div className="flex justify-center">
-                    <img src={coverImage} alt="Trip Cover Image" className="h-full w-full object-cover" />
-                </div>
-            </Link>
+        <div className="pb-14 grid grid-cols-3 gap-0.5 p-0.5">
+            {trips.map((trip) => {
+                return (
+                    <div key={trip.id} className="flex justify-center">
+                        <Link to={`/trip/${trip.id}`} key={trip.id}>
+                            <img src={trip.coverImage} alt="Trip Cover Image" className="object-cover h-full w-full" />
+                        </Link>
+                    </div>
+                );
+            })}
         </div>
     );
 };

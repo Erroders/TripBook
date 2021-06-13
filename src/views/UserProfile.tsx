@@ -1,33 +1,73 @@
-// import React from 'react';
+import React from 'react';
 import UserStats from '../components/ProfilePage/UserStats';
 import UserTrips from '../components/ProfilePage/UserTrips';
 import { TRIP_DATA } from '../models/TripData';
 import { USER_DATA } from '../models/UserData';
-import { getTripData, getUserData } from '../utils/getTripData';
+import { getAllTrips } from '../utils/controller/TripController';
+import { getUser } from '../utils/controller/UserController';
+import { useEffect, useState } from 'react';
 
-const UserProfile = () => {
-    const trip: TRIP_DATA = getTripData('unicef', 'adasd');
-    const user: USER_DATA = getUserData('akathecoder');
+const UserProfile: React.FC = () => {
+    const [userData, setuserData] = useState<USER_DATA>({
+        username: '',
+        firstName: '',
+        lastName: '',
+        bio: '',
+        email: '',
+        userProfilePhotoUrl: '',
+        followers: [],
+        followings: [],
+        noOfTrips: 0,
+    });
 
-    console.log(user);
-    console.log(trip);
+    const [tripData, settripData] = useState<TRIP_DATA[]>([]);
 
-    return trip.id ? (
+    useEffect(() => {
+        getUser('akathecoder').then((user) => {
+            if (user) {
+                setuserData(user);
+            } else {
+                setuserData({
+                    username: '',
+                    firstName: '',
+                    lastName: '',
+                    bio: '',
+                    email: '',
+                    userProfilePhotoUrl: '',
+                    followers: [],
+                    followings: [],
+                    noOfTrips: 0,
+                });
+            }
+        });
+
+        getAllTrips('akathecoder').then((trips) => {
+            if (trips) {
+                settripData(trips);
+            } else {
+                settripData([]);
+            }
+        });
+    }, []);
+
+    return userData.username ? (
         <div>
             <UserStats
-                username={user.username}
-                userProfilePhotoUrl={user.userProfilePhotoUrl}
-                firstName={user.firstName}
-                lastName={user.lastName}
-                bio={user.bio}
-                followers={user.followers}
-                followings={user.followings}
-                noOfTrips={user.noOfTrips}
+                username={userData.username}
+                userProfilePhotoUrl={userData.userProfilePhotoUrl}
+                firstName={userData.firstName}
+                lastName={userData.lastName}
+                bio={userData.bio}
+                followers={userData.followers}
+                followings={userData.followings}
+                noOfTrips={userData.noOfTrips}
             />
-            <UserTrips coverImage={trip.coverImage} tripId={trip.id} />
+            <UserTrips trips={tripData} />
         </div>
     ) : (
-        <div></div>
+        <div>
+            <p>No such User Found !!</p>
+        </div>
     );
 };
 
