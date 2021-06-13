@@ -24,11 +24,11 @@ const UserStats: React.FC<IUserStatsProps> = ({
     followings,
     noOfTrips,
 }: IUserStatsProps) => {
-    const usernameLogin = 'akathecoder1';
+    const usernameLogin = 'akathecoder';
     const follow = true;
 
     return (
-        <div className="flex flex-col border-gray-300 border-b p-5">
+        <div className="flex flex-col border-gray-300 border-b p-5 pb-7">
             <div className="flex flex-row items-center justify-around lg:justify-evenly">
                 {/* userProfilePhotoUrl */}
                 <img
@@ -38,7 +38,7 @@ const UserStats: React.FC<IUserStatsProps> = ({
                 />
                 <div className="flex flex-col">
                     {/* Username */}
-                    <p className="text-2xl font-light tracking-wide">{username}</p>
+                    <p className="ml-2 text-2xl font-light tracking-wide">{username}</p>
                     {/* followers + followings + noOfTrips */}
                     <div className="flex flex-row text-sm py-2.5 space-x-userStatsGap lg:space-x-8">
                         <div className="flex flex-col items-center">

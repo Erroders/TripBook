@@ -62,9 +62,14 @@ const userConverter = {
 };
 
 // Get user data
-export function getUser(username: string): USER_DATA | null {
-    FIREBASE_UTILS.getDocument(firestore.collection(FIREBASE_UTILS.Collection.USERS), username).then((userDoc) => {
-        return userConverter.fromFirestore(userDoc);
-    });
-    return null;
+export async function getUser(username: string): Promise<USER_DATA | null> {
+    return await FIREBASE_UTILS.getDocument(firestore.collection(FIREBASE_UTILS.Collection.USERS), username).then(
+        (userDoc) => {
+            if (userDoc) {
+                return userConverter.fromFirestore(userDoc);
+            } else {
+                return null;
+            }
+        },
+    );
 }
