@@ -54,7 +54,7 @@ const Trip: React.FC = () => {
                     // TODO: Add auth confirmation
                     true && (
                         <LinkButton
-                            link={`/user/${data.username}/edit/${data.id}`}
+                            link={`/user/${data.username}/edit/${data.id}/${data.noOfPosts + 1}`}
                             text="Edit Trip"
                             heroIcon={<PencilAltIcon />}
                         />

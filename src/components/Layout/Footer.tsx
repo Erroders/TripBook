@@ -15,15 +15,15 @@ const Footer: React.FC<FooterProps> = ({ selectedTab }: FooterProps) => {
                 setCurrentTab(TABS.FEED);
                 break;
             case 'explore':
-                setCurrentTab(TABS.FEED);
+                setCurrentTab(TABS.EXPLORE);
 
                 break;
             case 'add':
-                setCurrentTab(TABS.FEED);
+                setCurrentTab(TABS.CREATE);
 
                 break;
             case 'notifications':
-                setCurrentTab(TABS.FEED);
+                setCurrentTab(TABS.NOTIFICATIONS);
 
                 break;
             case 'profile':
@@ -35,7 +35,7 @@ const Footer: React.FC<FooterProps> = ({ selectedTab }: FooterProps) => {
 
                 break;
         }
-    }, []);
+    }, [selectedTab]);
 
     return (
         <footer className="grid grid-cols-5 bg-primary-gray h-header text-xl font-semibold font-display md:w-2/3 lg:w-1/3 w-full fixed bottom-0 z-50 border-t border-gray-300">
