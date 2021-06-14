@@ -1,8 +1,3 @@
-export interface USER_FOLLOW {
-    username: string;
-    userProfilePhotoUrl: string;
-}
-
 export interface USER_DATA {
     username: string;
     firstName: string;
@@ -10,8 +5,12 @@ export interface USER_DATA {
     bio: string;
     email: string;
     userProfilePhotoUrl: string;
-    followers: Array<USER_FOLLOW>;
-    followings: Array<USER_FOLLOW>;
+    followers: USER_FOLLOW;
+    followings: USER_FOLLOW;
     noOfTrips: number;
     currentTrip: string;
+}
+
+export interface USER_FOLLOW {
+    [username: string]: string;
 }

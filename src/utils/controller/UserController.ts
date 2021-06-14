@@ -1,6 +1,8 @@
+// Imports
 import * as FIREBASE_UTILS from '../firebase/firebaseUtils';
 import { USER_DATA, USER_FOLLOW } from '../../models/UserData';
-import { firestore } from '../firebase/firebase';
+import firebase, { firestore } from '../firebase/firebase';
+// -----------------------------------------------------------------------------
 
 // User class
 class User implements USER_DATA {
@@ -11,8 +13,8 @@ class User implements USER_DATA {
     bio: string;
     email: string;
     userProfilePhotoUrl: string;
-    followers: Array<USER_FOLLOW>;
-    followings: Array<USER_FOLLOW>;
+    followers: USER_FOLLOW;
+    followings: USER_FOLLOW;
     noOfTrips: number;
     currentTrip: string;
 
@@ -24,8 +26,8 @@ class User implements USER_DATA {
         bio: string,
         email: string,
         userProfilePhotoUrl: string,
-        followers: Array<USER_FOLLOW>,
-        followings: Array<USER_FOLLOW>,
+        followers: USER_FOLLOW,
+        followings: USER_FOLLOW,
         noOfTrips: number,
         currentTrip: string,
     ) {
@@ -41,6 +43,7 @@ class User implements USER_DATA {
         this.currentTrip = currentTrip;
     }
 }
+// -----------------------------------------------------------------------------
 
 // Firestore UserConverter
 const userConverter = {
@@ -64,6 +67,7 @@ const userConverter = {
         );
     },
 };
+// -----------------------------------------------------------------------------
 
 // Get user data
 export async function getUser(username: string): Promise<USER_DATA | null> {
@@ -77,3 +81,74 @@ export async function getUser(username: string): Promise<USER_DATA | null> {
         },
     );
 }
+// -----------------------------------------------------------------------------
+
+// Get all followers
+export function getFollowers(followers: USER_FOLLOW): User[] {
+    const followersData: User[] = [];
+    Object.keys(followers).map(async (follower) => {
+        await getUser(follower).then((userData) => {
+            userData && followersData.push(userData);
+        });
+    });
+    return followersData;
+}
+// -----------------------------------------------------------------------------
+
+// Get all followings
+export function getFollowings(followings: USER_FOLLOW): User[] {
+    const followingsData: User[] = [];
+    Object.keys(followings).map(async (following) => {
+        await getUser(following).then((userData) => {
+            userData && followingsData.push(userData);
+        });
+    });
+    return followingsData;
+}
+// -----------------------------------------------------------------------------
+
+// Follow user
+export async function userFollow(userFollowing: string, userToFollow: string): Promise<Boolean> {
+    return await FIREBASE_UTILS.updateDocument(firestore.collection(FIREBASE_UTILS.Collection.USERS), {
+        id: userFollowing,
+        [`followings.${userToFollow}`]: `/${FIREBASE_UTILS.Collection.USERS}/${userToFollow}`,
+    })
+        .then(async () => {
+            console.log(`${userFollowing} now follows ${userToFollow}!!`);
+            return await FIREBASE_UTILS.updateDocument(firestore.collection(FIREBASE_UTILS.Collection.USERS), {
+                id: userToFollow,
+                [`followers.${userFollowing}`]: `/${FIREBASE_UTILS.Collection.USERS}/${userFollowing}`,
+            }).then(() => {
+                console.log(`${userToFollow} is now followed by ${userFollowing}!!`);
+                return true;
+            });
+        })
+        .catch(() => {
+            console.error(`${userFollowing} unable to follow ${userToFollow}!!`);
+            return false;
+        });
+}
+// -----------------------------------------------------------------------------
+
+// Unfollow user
+export async function userUnfollow(userUnfollowing: string, userToUnfollow: string): Promise<Boolean> {
+    return await FIREBASE_UTILS.updateDocument(firestore.collection(FIREBASE_UTILS.Collection.USERS), {
+        id: userUnfollowing,
+        [`followings.${userToUnfollow}`]: firebase.firestore.FieldValue.delete(),
+    })
+        .then(async () => {
+            console.log(`${userUnfollowing} unfollowed ${userToUnfollow}!!`);
+            return await FIREBASE_UTILS.updateDocument(firestore.collection(FIREBASE_UTILS.Collection.USERS), {
+                id: userToUnfollow,
+                [`followers.${userUnfollowing}`]: firebase.firestore.FieldValue.delete(),
+            }).then(() => {
+                console.log(`${userToUnfollow} is now unfollowed by ${userUnfollowing}!!`);
+                return true;
+            });
+        })
+        .catch(() => {
+            console.error(`${userUnfollowing} unable to unfollow ${userToUnfollow}!!`);
+            return false;
+        });
+}
+// -----------------------------------------------------------------------------
