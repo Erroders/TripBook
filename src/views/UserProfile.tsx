@@ -6,8 +6,11 @@ import { USER_DATA } from '../models/UserData';
 import { getAllTrips } from '../utils/controller/TripController';
 import { getUser } from '../utils/controller/UserController';
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router';
+// import ListOfUsers from '../components/ProfilePage/ListOfUsers';
 
 const UserProfile: React.FC = () => {
+    const { userId } = useParams<{ userId: string }>();
     const [userData, setuserData] = useState<USER_DATA>({
         username: '',
         firstName: '',
@@ -24,7 +27,7 @@ const UserProfile: React.FC = () => {
     const [tripData, settripData] = useState<TRIP_DATA[]>([]);
 
     useEffect(() => {
-        getUser('akathecoder').then((user) => {
+        getUser(userId).then((user) => {
             if (user) {
                 setuserData(user);
             } else {
@@ -43,7 +46,7 @@ const UserProfile: React.FC = () => {
             }
         });
 
-        getAllTrips('akathecoder').then((trips) => {
+        getAllTrips(userId).then((trips) => {
             if (trips) {
                 settripData(trips);
             } else {
@@ -64,7 +67,8 @@ const UserProfile: React.FC = () => {
                 followings={userData.followings}
                 noOfTrips={userData.noOfTrips}
             />
-            <UserTrips trips={tripData} />
+            <UserTrips trips={tripData} username={userData.username} />
+            {/* <ListOfUsers followers={userData.followers} followings={userData.followings} /> */}
         </div>
     ) : (
         <div>

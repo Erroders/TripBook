@@ -1,7 +1,7 @@
 import React from 'react';
 import { USER_FOLLOW } from '../../models/UserData';
-import { LogoutIcon, PencilAltIcon, CheckCircleIcon as CheckCircleIcon0 } from '@heroicons/react/outline';
-import { CheckCircleIcon as CheckCircleIcon1 } from '@heroicons/react/solid';
+import { LogoutIcon, PencilAltIcon } from '@heroicons/react/outline';
+import FollowButton from '../General/FollowButton';
 
 interface IUserStatsProps {
     username: string;
@@ -24,8 +24,8 @@ const UserStats: React.FC<IUserStatsProps> = ({
     followings,
     noOfTrips,
 }: IUserStatsProps) => {
-    const usernameLogin = 'akathecoder';
-    const follow = true;
+    // TODO:  get the username from the login User Info (useContext)
+    const userLogin = 'akathecoder1';
 
     return (
         <div className="flex flex-col border-gray-300 border-b p-5 pb-7">
@@ -45,11 +45,11 @@ const UserStats: React.FC<IUserStatsProps> = ({
                             <p className="font-bold">{noOfTrips}</p>
                             <p>Trips</p>
                         </div>
-                        <div className="flex flex-col items-center">
+                        <div className="flex flex-col items-center cursor-pointer">
                             <p className="font-bold">{followers.length}</p>
                             <p>Followers</p>
                         </div>
-                        <div className="flex flex-col items-center">
+                        <div className="flex flex-col items-center cursor-pointer">
                             <p className="font-bold">{followings.length}</p>
                             <p>Followings</p>
                         </div>
@@ -66,7 +66,7 @@ const UserStats: React.FC<IUserStatsProps> = ({
 
             {/* Edit Profile + Follow/Follwing */}
             <div>
-                {usernameLogin === username ? (
+                {userLogin === username ? (
                     <button className="w-full p-1.5 justify-center flex bg-gray-200 rounded border hover:bg-white hover:border-gray-300 focus:outline-none shadow font-semibold">
                         <div className="flex flex-row items-center mx-auto space-x-3">
                             <PencilAltIcon className="w-4 h-4" />
@@ -74,24 +74,12 @@ const UserStats: React.FC<IUserStatsProps> = ({
                         </div>
                     </button>
                 ) : (
-                    <button className="w-full p-1.5 justify-center flex bg-gray-200 rounded border hover:bg-white hover:border-gray-300 focus:outline-none shadow font-semibold">
-                        {follow ? (
-                            <div className="flex flex-row items-center mx-auto space-x-3">
-                                <CheckCircleIcon1 className="w-4 h-4" />
-                                <p className="text-sm font-medium">Following</p>
-                            </div>
-                        ) : (
-                            <div className="flex flex-row items-center mx-auto space-x-3">
-                                <CheckCircleIcon0 className="w-4 h-4" />
-                                <p className="text-sm">Follow</p>
-                            </div>
-                        )}
-                    </button>
+                    <FollowButton username={username} />
                 )}
             </div>
 
             {/* LogOut */}
-            <div className={`${usernameLogin === username ? 'pt-3' : 'hidden'} `}>
+            <div className={`${userLogin === username ? 'pt-3' : 'hidden'} `}>
                 <button className="w-full p-1.5 justify-center flex bg-red-200 rounded border hover:bg-red-100 border-red-200 focus:outline-none shadow font-semibold">
                     <div className="flex flex-row items-center mx-auto space-x-3">
                         <LogoutIcon className="w-4 h-4" />
