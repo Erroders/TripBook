@@ -122,11 +122,10 @@ export async function updatePost(
 export async function uploadPostImage(
     username: string,
     tripId: string,
-    postId: string,
     fileName: string,
-    file: Blob | Uint8Array | ArrayBuffer,
+    file: File | null | undefined,
 ): Promise<string> {
-    return await FIREBASE_UTILS.uploadFile(storage.ref(`${username}/${tripId}/${postId}/${fileName}`), file).then(
+    return await FIREBASE_UTILS.uploadFile(storage.ref(`${username}/${tripId}/${fileName}`), file as Blob).then(
         (downloadUrl) => {
             return downloadUrl;
         },
