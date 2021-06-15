@@ -73,8 +73,14 @@ export async function createTrip(username: string, trip: TRIP_DATA): Promise<boo
         firestore.collection(FIREBASE_UTILS.Collection.USERS).doc(username).collection(FIREBASE_UTILS.Collection.TRIPS),
         tripConverter.toFireStore(trip),
     )
-        .then(() => {
-            return true;
+        .then(async (createdTripId) => {
+            return await FIREBASE_UTILS.updateDocument(firestore.collection(FIREBASE_UTILS.Collection.USERS), {
+                id: username,
+                noOfTrips: firebase.firestore.FieldValue.increment(1),
+                currentTrip: createdTripId,
+            }).then(() => {
+                return true;
+            });
         })
         .catch((error) => {
             console.error('Error while creating trip', error);
@@ -116,8 +122,13 @@ export async function deleteTrip(username: string, tripId: string): Promise<bool
         firestore.collection(FIREBASE_UTILS.Collection.USERS).doc(username).collection(FIREBASE_UTILS.Collection.TRIPS),
         tripId,
     )
-        .then(() => {
-            return true;
+        .then(async () => {
+            return await FIREBASE_UTILS.updateDocument(firestore.collection(FIREBASE_UTILS.Collection.USERS), {
+                id: username,
+                noOfTrips: firebase.firestore.FieldValue.increment(-1),
+            }).then(() => {
+                return true;
+            });
         })
         .catch((error) => {
             console.error('Error while deleting trip', error);
