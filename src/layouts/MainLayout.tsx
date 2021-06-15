@@ -8,9 +8,12 @@ import AddView from '../views/AddView';
 import Explore from '../views/Explore';
 import Notifications from '../views/Notifications';
 
-const HomeLayout: React.FC = () => {
-    const { pathname } = useLocation();
+interface Props {
+    children?: React.ReactNode;
+}
 
+const HomeLayout: React.FC<Props> = ({ children }: Props) => {
+    const { pathname } = useLocation();
     const view = () => {
         switch (pathname.slice(1)) {
             case 'home':
@@ -28,19 +31,15 @@ const HomeLayout: React.FC = () => {
             case 'profile':
                 return <UserProfile />;
                 break;
-
             default:
                 return <HomeFeed />;
                 break;
         }
     };
-
     return (
         <div className="flex flex-col mx-auto md:w-2/3 lg:w-1/3 relative min-h-screen">
             <Header />
-
-            <main className="min-h-screen">{view()}</main>
-
+            <main className="min-h-screen">{children ? children : view()}</main>
             <Footer selectedTab={pathname.slice(1)} />
         </div>
     );
