@@ -1,7 +1,8 @@
 import React from 'react';
+import HomeLayout from '../layouts/MainLayout';
 
 const Explore: React.FC = () => {
-    return <div>Explore</div>;
+    return <HomeLayout>Explore</HomeLayout>;
 };
 
 export default Explore;

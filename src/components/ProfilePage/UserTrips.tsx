@@ -9,7 +9,7 @@ interface Props {
 }
 
 const UserTrips: React.FC<Props> = ({ trips, username }: Props) => {
-    return trips.length != 0 ? (
+    return trips.length === 0 ? (
         <div className="flex flex-col items-center space-y-3 my-20 pb-14  opacity-75">
             <div className=" p-5 rounded-full border border-black">
                 <ViewGridAddIcon className="h-12 w-12" />
@@ -18,10 +18,10 @@ const UserTrips: React.FC<Props> = ({ trips, username }: Props) => {
         </div>
     ) : (
         <div className="pb-14 grid grid-cols-3 gap-0.5 p-0.5">
-            {trips.map((trip) => {
+            {trips.map((trip, index) => {
                 return (
-                    <div key={trip.id} className="flex justify-center">
-                        <Link to={`/user/${username}/${trip.id}`} key={trip.id}>
+                    <div key={trip.id ? trip.id : index} className="flex justify-center">
+                        <Link to={`/user/${username}/${trip.id}`}>
                             <img
                                 src={trip.coverImage}
                                 alt="Trip Cover Image"
