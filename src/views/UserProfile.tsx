@@ -6,8 +6,8 @@ import { USER_DATA } from '../models/UserData';
 import { getAllTrips } from '../utils/controller/TripController';
 import { getUser } from '../utils/controller/UserController';
 import { useEffect, useState } from 'react';
-import HomeLayout from '../layouts/MainLayout';
 import Loading from '../components/General/Loading';
+import HomeLayout from '../layouts/MainLayout';
 import LoadingContext from '../contexts/LoadingContext';
 // import { useParams } from 'react-router';
 
@@ -34,20 +34,21 @@ const UserProfile: React.FC = () => {
             });
 
             getAllTrips(userId).then((trips) => {
-                if (trips) {
+                if (trips && trips.length !== 0) {
                     settripData(trips);
                 }
+                setLoading && setLoading(false);
             });
-            setLoading && setLoading(false);
         }
     }, [userId]);
 
-    return loading ? (
-        <Loading />
-    ) : (
-        userData && (
-            <HomeLayout>
-                {userData.username ? (
+    return (
+        <HomeLayout>
+            {loading ? (
+                <Loading />
+            ) : (
+                userData &&
+                (userData.username ? (
                     <div>
                         <UserStats
                             username={userData.username}
@@ -65,9 +66,9 @@ const UserProfile: React.FC = () => {
                     <div>
                         <p>No such User Found !!</p>
                     </div>
-                )}
-            </HomeLayout>
-        )
+                ))
+            )}
+        </HomeLayout>
     );
 };
 
