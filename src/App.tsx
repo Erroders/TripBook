@@ -15,6 +15,7 @@ import Trip from './views/Trip';
 import { USER_DATA } from './models/UserData';
 import { auth } from './utils/firebase/firebase';
 import LoginPage from './layouts/LoginPage';
+import EditProfile from './views/EditProfile';
 
 const App: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(true);
@@ -59,6 +60,9 @@ const App: React.FC = () => {
                         </Route>
                         <Route path="/profile/" exact={true}>
                             <UserProfile />
+                        </Route>
+                        <Route path="/editProfile/" exact={true}>
+                            <EditProfile />
                         </Route>
                         <Route path="/profile/:userId/followers" exact={true}>
                             <Followers />
