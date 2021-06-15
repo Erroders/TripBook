@@ -2,6 +2,7 @@ import React from 'react';
 import { USER_FOLLOW } from '../../models/UserData';
 import { LogoutIcon, PencilAltIcon } from '@heroicons/react/outline';
 import FollowButton from '../General/FollowButton';
+import { Link } from 'react-router-dom';
 
 interface IUserStatsProps {
     username: string;
@@ -9,8 +10,8 @@ interface IUserStatsProps {
     firstName: string;
     lastName: string;
     bio: string;
-    followers: Array<USER_FOLLOW>;
-    followings: Array<USER_FOLLOW>;
+    followers: USER_FOLLOW;
+    followings: USER_FOLLOW;
     noOfTrips: number;
 }
 
@@ -25,7 +26,7 @@ const UserStats: React.FC<IUserStatsProps> = ({
     noOfTrips,
 }: IUserStatsProps) => {
     // TODO:  get the username from the login User Info (useContext)
-    const userLogin = 'akathecoder1';
+    const userLogin = 'nonitmittal';
 
     return (
         <div className="flex flex-col border-gray-300 border-b p-5 pb-7">
@@ -45,14 +46,18 @@ const UserStats: React.FC<IUserStatsProps> = ({
                             <p className="font-bold">{noOfTrips}</p>
                             <p>Trips</p>
                         </div>
-                        <div className="flex flex-col items-center cursor-pointer">
-                            <p className="font-bold">{followers.length}</p>
-                            <p>Followers</p>
-                        </div>
-                        <div className="flex flex-col items-center cursor-pointer">
-                            <p className="font-bold">{followings.length}</p>
-                            <p>Followings</p>
-                        </div>
+                        <Link to={`/profile/${username}/followers`}>
+                            <div className="flex flex-col items-center cursor-pointer">
+                                <p className="font-bold">{Object.keys(followers).length}</p>
+                                <p>Followers</p>
+                            </div>
+                        </Link>
+                        <Link to={`/profile/${username}/followings`}>
+                            <div className="flex flex-col items-center cursor-pointer">
+                                <p className="font-bold">{Object.keys(followings).length}</p>
+                                <p>Followings</p>
+                            </div>
+                        </Link>
                     </div>
                 </div>
             </div>
