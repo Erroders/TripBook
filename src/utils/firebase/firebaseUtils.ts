@@ -17,25 +17,29 @@ export async function addDocument<Document extends { id?: string }>(
     collectionRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>,
     { id, ...data }: Document,
     merge = true,
-): Promise<void> {
+): Promise<string | undefined> {
     if (id) {
-        await collectionRef
+        return await collectionRef
             .doc(id)
             .set(data, { merge: merge })
             .then(() => {
                 console.log('Document successfully written!');
+                return id;
             })
             .catch((error) => {
                 console.error('Error writing document: ', error);
+                return undefined;
             });
     } else {
-        await collectionRef
+        return await collectionRef
             .add(data)
             .then((docRef) => {
                 console.log('Document written with ID: ', docRef.id);
+                return docRef.id;
             })
             .catch((error) => {
                 console.error('Error adding document: ', error);
+                return undefined;
             });
     }
 }
@@ -111,6 +115,7 @@ export async function updateDocument<Document extends { id: string }>(
 
 // =================================STORAGE=====================================
 const storageRef = storage.ref();
+// -----------------------------------------------------------------------------
 
 // upload file
 export async function uploadFile(
@@ -127,6 +132,7 @@ export async function uploadFile(
             console.error('Error occured while uploading the file!!', error);
         });
 }
+// -----------------------------------------------------------------------------
 
 // download file
 export async function downloadFile(fileRef: firebase.storage.Reference): Promise<void> {
@@ -144,9 +150,10 @@ export async function downloadFile(fileRef: firebase.storage.Reference): Promise
             xhr.send();
         })
         .catch((error) => {
-            console.error('Error occured while deleting the file!!', error);
+            console.error('Error occured while downloading the file!!', error);
         });
 }
+// -----------------------------------------------------------------------------
 
 // delete file
 export async function deleteFile(fileRef: firebase.storage.Reference): Promise<void> {
@@ -157,5 +164,51 @@ export async function deleteFile(fileRef: firebase.storage.Reference): Promise<v
         })
         .catch((error) => {
             console.error('Error occured while deleting the file!!', error);
+        });
+}
+// -----------------------------------------------------------------------------
+
+// ==================================AUTH=======================================
+
+export async function userLoginWithGoogle() {
+    // set default language to browser's default
+    firebase.auth().useDeviceLanguage();
+
+    // Start a sign in process for an unauthenticated user.
+    const provider = new firebase.auth.GoogleAuthProvider();
+    provider.addScope('profile');
+    provider.addScope('email');
+    console.log(provider);
+    return await firebase
+        .auth()
+        .signInWithPopup(provider)
+        .then((result) => {
+            const user = result.user;
+            console.log(result?.additionalUserInfo?.isNewUser);
+            console.log(user);
+
+            return {
+                existing: result?.additionalUserInfo?.isNewUser,
+                displayName: user?.displayName,
+                email: user?.email,
+                photoURL: user?.photoURL,
+            };
+            // user &&
+            // createUser({
+            //     username: "",
+            //     firstName: user.displayName ? user.displayName.split(" ")[0]: "",
+            //     lastName: user.displayName ? user.displayName.split(" ")[1]: "",
+            //     bio: "",
+            //     email: user.email ? user.email: "",
+            //     userProfilePhotoUrl: user.photoURL ? user.photoURL : "",
+            //     followers: {},
+            //     followings: {},
+            //     noOfTrips: 0,
+            //     currentTrip: "",
+            // })
+        })
+        .catch((error) => {
+            console.error(error);
+            return null;
         });
 }
