@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import CreateTrip from './components/AddTrip/CreateTrip';
 import LoadingContext from './contexts/LoadingContext';
@@ -14,62 +14,40 @@ import EditTrip from './views/EditTrip';
 import Trip from './views/Trip';
 import { USER_DATA } from './models/UserData';
 import { auth } from './utils/firebase/firebase';
-import LoginPage from './layouts/LoginPage';
+import PrivateRoute from './components/Route/PrivateRoute';
+import LoginPage from './views/LoginPage';
 import EditProfile from './views/EditProfile';
 
 const App: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(true);
-    const [user, _setUser] = useState<USER_DATA | null>(null);
+    const [user, setUser] = useState<USER_DATA | null>(null);
 
-    useEffect(() => {
-        console.log('user', user);
-        const unsubscribe = auth.onAuthStateChanged((_user) => {
-            console.log(_user);
-        });
-        return unsubscribe;
-    }, [user]);
+    auth.onAuthStateChanged((_user) => {
+        _user ? '' : setUser(null);
+    });
 
     return (
-        <LoginedUserContext.Provider value={user}>
+        <LoginedUserContext.Provider value={{ user, setUser }}>
             <LoadingContext.Provider value={{ loading, setLoading }}>
                 <BrowserRouter>
                     <Switch>
                         <Route path={'/login'}>
                             <LoginPage />
                         </Route>
-                        <Route path={'/home'}>
-                            <HomeFeed />
-                        </Route>
-                        <Route path={'/add'}>
-                            <AddView />
-                        </Route>
-                        <Route path={'/notifications'}>
-                            <Notifications />
-                        </Route>
-                        <Route path={'/explore'}>
-                            <Explore />
-                        </Route>
-                        <Route path="/user/:userId/:tripId" exact={true}>
-                            <Trip />
-                        </Route>
-                        <Route path="/user/:userId/edit/:tripId/:index" exact={true}>
+                        <PrivateRoute path={'/home'} exact={true} component={HomeFeed} />
+                        <PrivateRoute path={'/add'} component={AddView} exact={true} />
+                        <PrivateRoute path={'/notifications'} component={Notifications} exact={true} />
+                        <PrivateRoute path={'/explore'} component={Explore} exact={true} />
+                        <PrivateRoute path="/user/:userId/:tripId" exact={true} component={Trip} />
+                        <PrivateRoute path="/user/:userId/edit/:tripId/:index" exact={true} component={EditTrip}>
                             <EditTrip />
-                        </Route>
-                        <Route path="/createTrip" exact={true}>
-                            <CreateTrip />
-                        </Route>
-                        <Route path="/profile/" exact={true}>
-                            <UserProfile />
-                        </Route>
-                        <Route path="/editProfile/" exact={true}>
-                            <EditProfile />
-                        </Route>
-                        <Route path="/profile/:userId/followers" exact={true}>
-                            <Followers />
-                        </Route>
-                        <Route path="/profile/:userId/followings" exact={true}>
-                            <Followings />
-                        </Route>
+                        </PrivateRoute>
+                        <PrivateRoute path="/createTrip" exact={true} component={CreateTrip} />
+                        <PrivateRoute path="/profile/:userId" exact={true} component={UserProfile} />
+                        <PrivateRoute path="/editProfile" exact={true} component={EditProfile} />
+                        <PrivateRoute path="/profile/:userId/followers" exact={true} component={Followers} />
+                        <PrivateRoute path="/profile/:userId/followings" exact={true} component={Followings} />
+
                         <Redirect from="/" to="/home" />
                         <Route />
                     </Switch>

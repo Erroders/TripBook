@@ -3,6 +3,9 @@ import { USER_FOLLOW } from '../../models/UserData';
 import { LogoutIcon, PencilAltIcon } from '@heroicons/react/outline';
 import FollowButton from '../General/FollowButton';
 import { Link } from 'react-router-dom';
+import { useUserContext } from '../../contexts/LoginedUserContext';
+import { auth } from '../../utils/firebase/firebase';
+import { useHistory } from 'react-router';
 
 interface IUserStatsProps {
     username: string;
@@ -25,8 +28,8 @@ const UserStats: React.FC<IUserStatsProps> = ({
     followings,
     noOfTrips,
 }: IUserStatsProps) => {
-    // TODO:  get the username from the login User Info (useContext)
-    const userLogin = 'nonitmittal';
+    const { user: userLogin } = useUserContext();
+    const history = useHistory();
 
     return (
         <div className="flex flex-col border-gray-300 border-b p-5 pb-7">
@@ -71,8 +74,13 @@ const UserStats: React.FC<IUserStatsProps> = ({
 
             {/* Edit Profile + Follow/Follwing */}
             <div>
-                {userLogin === username ? (
-                    <button className="w-full p-1.5 justify-center flex bg-gray-200 rounded border hover:bg-white hover:border-gray-300 focus:outline-none shadow font-semibold">
+                {userLogin?.username === username ? (
+                    <button
+                        className="w-full p-1.5 justify-center flex bg-gray-200 rounded border hover:bg-white hover:border-gray-300 focus:outline-none shadow font-semibold"
+                        onClick={() => {
+                            history.push('/editProfile');
+                        }}
+                    >
                         <div className="flex flex-row items-center mx-auto space-x-3">
                             <PencilAltIcon className="w-4 h-4" />
                             <p className="text-sm">Edit Profile</p>
@@ -84,8 +92,14 @@ const UserStats: React.FC<IUserStatsProps> = ({
             </div>
 
             {/* LogOut */}
-            <div className={`${userLogin === username ? 'pt-3' : 'hidden'} `}>
-                <button className="w-full p-1.5 justify-center flex bg-red-200 rounded border hover:bg-red-100 border-red-200 focus:outline-none shadow font-semibold">
+            <div className={`${userLogin?.username === username ? 'pt-3' : 'hidden'} `}>
+                <button
+                    className="w-full p-1.5 justify-center flex bg-red-200 rounded border hover:bg-red-100 border-red-200 focus:outline-none shadow font-semibold"
+                    onClick={() => {
+                        auth.signOut();
+                        history.push('/login');
+                    }}
+                >
                     <div className="flex flex-row items-center mx-auto space-x-3">
                         <LogoutIcon className="w-4 h-4" />
                         <p className="text-sm">LogOut</p>
