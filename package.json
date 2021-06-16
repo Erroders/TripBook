@@ -44,7 +44,8 @@
         "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
         "start-chrome-linux": "BROWSER=google-chrome craco start",
         "start-chrome-windows": "BROWSER=chrome craco start",
-        "start-chrome-macos": "BROWSER='google chrome' craco start"
+        "start-chrome-macos": "BROWSER='google chrome' craco start",
+        "deploy": "craco build && firebase deploy"
     },
     "eslintConfig": {
         "extends": [
