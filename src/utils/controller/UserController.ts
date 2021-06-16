@@ -205,6 +205,20 @@ export async function updateUser(
         ...updatedUserData,
     })
         .then(() => {
+            if (updatedUserData.userProfilePhotoUrl) {
+                firestore
+                    .collection(FIREBASE_UTILS.Collection.USERS)
+                    .doc(username)
+                    .collection(FIREBASE_UTILS.Collection.TRIPS)
+                    .get()
+                    .then((snapshot) => {
+                        if (!snapshot.empty) {
+                            snapshot.forEach((tripDoc) => {
+                                tripDoc.ref.update({ userProfilePhotoUrl: updatedUserData.userProfilePhotoUrl });
+                            });
+                        }
+                    });
+            }
             return true;
         })
         .catch((error) => {
@@ -213,3 +227,5 @@ export async function updateUser(
         });
 }
 // -----------------------------------------------------------------------------
+
+//
