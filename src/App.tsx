@@ -44,6 +44,7 @@ const App: React.FC = () => {
                         </PrivateRoute>
                         <PrivateRoute path="/createTrip" exact={true} component={CreateTrip} />
                         <PrivateRoute path="/profile/:userId" exact={true} component={UserProfile} />
+                        <PrivateRoute path="/editProfile" exact={true} component={EditProfile} />
                         <PrivateRoute path="/profile/:userId/followers" exact={true} component={Followers} />
                         <PrivateRoute path="/profile/:userId/followings" exact={true} component={Followings} />
 
