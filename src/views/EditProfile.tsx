@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import ClickButton from '../components/General/ClickButton';
-// import { PlusIcon } from '@heroicons/react/outline';
-
+import { useUserContext } from '../contexts/LoginedUserContext';
 import MainLayout from '../layouts/MainLayout';
+import { updateUser, uploadUserProfileImage } from '../utils/controller/UserController';
 
 const EditProfile: React.FC = () => {
     const imageRef = useRef<HTMLInputElement>(null);
+    const { user } = useUserContext();
 
     const [imageUrl, setImageUrl] = useState('');
     const [username, setUsername] = useState('');
@@ -14,20 +15,34 @@ const EditProfile: React.FC = () => {
     const [bio, setBio] = useState('');
 
     useEffect(() => {
-        // TODO: get user data
+        if (user) {
+            user.userProfilePhotoUrl && setImageUrl(user.userProfilePhotoUrl);
+            user.username && setUsername(user.username);
+            user.firstName && setFirstName(user.firstName);
+            user.lastName && setLastName(user.lastName);
+            user.bio && setBio(user.bio);
+        }
     }, []);
 
     const handleImageUpload = () => {
-        // TODO: Upload data
-        // if (userId && fileName) {
-        //     uploadTripCoverImage(userId, uuidv4(), fileName, imageRef.current?.files?.item(0)).then((value) => {
-        //         setImageUrl(value);
-        //     });
-        // }
+        uploadUserProfileImage(username, 'profileImage', imageRef.current?.files?.item(0)).then((newImageUrl) => {
+            setImageUrl(newImageUrl);
+        });
     };
 
     const handleSubmit = () => {
-        // TODO: Handle Submit
+        if (!username && !firstName && !lastName) {
+            return;
+        }
+
+        updateUser(username, {
+            bio: bio,
+            firstName: firstName,
+            lastname: lastName,
+            userProfilePhotoUrl: imageUrl,
+        }).then(() => {
+            window.history.back();
+        });
     };
 
     const errorImage = 'https://img.icons8.com/ios/256/000000/user-male-circle.png';
@@ -73,6 +88,7 @@ const EditProfile: React.FC = () => {
                             type="text"
                             name="username"
                             id="username"
+                            disabled
                             className="w-full p-2 border outline-none rounded-md"
                             placeholder="Username"
                             value={username}
@@ -93,6 +109,7 @@ const EditProfile: React.FC = () => {
                             type="text"
                             name="firstName"
                             id="firstName"
+                            required
                             className="w-full p-2 border outline-none rounded-md"
                             placeholder="First Name"
                             value={firstName}
@@ -113,6 +130,7 @@ const EditProfile: React.FC = () => {
                             type="text"
                             name="lastName"
                             id="lastName"
+                            required
                             className="w-full p-2 border outline-none rounded-md"
                             placeholder="Last Name"
                             value={lastName}

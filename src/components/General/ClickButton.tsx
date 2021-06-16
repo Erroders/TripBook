@@ -10,7 +10,7 @@ interface ClickButtonProps {
 const ClickButton: React.FC<ClickButtonProps> = ({ heroIcon, text, onClick, color }: ClickButtonProps) => {
     return (
         <button
-            className={`w-full p-1.5 justify-center flex rounded border hover:bg-white hover:border-gray-300 focus:outline-none shadow font-semibold ${
+            className={`w-full p-1.5 justify-center flex rounded hover:bg-white hover:border-gray-300 focus:outline-none shadow font-semibold ${
                 color ? color : 'bg-gray-200'
             }`}
             onClick={onClick}

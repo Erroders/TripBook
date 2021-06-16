@@ -31,7 +31,7 @@ const TripBox: React.FC<ThumbnailProps> = ({
                     <img
                         src={userProfilePhotoUrl}
                         alt="User Profile Picture"
-                        className="h-userProfilePicSmall rounded-full border border-primary-blue"
+                        className="h-userProfilePicSmall w-userProfilePicSmall rounded-full border border-primary-blue object-cover"
                     />
                     <span className="my-auto text-lg font-semibold tracking-wide ml-2">{username}</span>
                 </a>
