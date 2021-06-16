@@ -46,7 +46,7 @@ export class User implements USER_DATA {
 // -----------------------------------------------------------------------------
 
 // Firestore UserConverter
-const userConverter = {
+export const userConverter = {
     toFirestore: function (user: USER_DATA) {
         const { username, ...userData } = user;
         return { id: username, ...userData };
@@ -171,5 +171,14 @@ export async function createUser(userData: USER_DATA): Promise<boolean> {
             console.log(error);
             return false;
         });
+}
+// -----------------------------------------------------------------------------
+
+// Get userData by email
+export function getUserByEmail(
+    email: string,
+    cb: (snapshot: firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData>) => void,
+) {
+    firestore.collection(FIREBASE_UTILS.Collection.USERS).where('email', '==', email).onSnapshot(cb);
 }
 // -----------------------------------------------------------------------------

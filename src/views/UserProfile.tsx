@@ -9,11 +9,10 @@ import { useEffect, useState } from 'react';
 import Loading from '../components/General/Loading';
 import HomeLayout from '../layouts/MainLayout';
 import LoadingContext from '../contexts/LoadingContext';
-// import { useParams } from 'react-router';
+import { useParams } from 'react-router';
 
 const UserProfile: React.FC = () => {
-    // const { userId } = useParams<{ userId: string }>();
-    const userId = 'nonitmittal';
+    const { userId } = useParams<{ userId: string }>();
     const [userData, setuserData] = useState<USER_DATA | null>(null);
 
     const [tripData, settripData] = useState<TRIP_DATA[]>([]);
