@@ -1,7 +1,7 @@
 // Imports
 import * as FIREBASE_UTILS from '../firebase/firebaseUtils';
 import { USER_DATA, USER_FOLLOW } from '../../models/UserData';
-import firebase, { firestore } from '../firebase/firebase';
+import firebase, { firestore, storage } from '../firebase/firebase';
 // -----------------------------------------------------------------------------
 
 // User class
@@ -180,5 +180,36 @@ export function getUserByEmail(
     cb: (snapshot: firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData>) => void,
 ) {
     firestore.collection(FIREBASE_UTILS.Collection.USERS).where('email', '==', email).onSnapshot(cb);
+}
+// -----------------------------------------------------------------------------
+
+// Upload user profile image
+export async function uploadUserProfileImage(
+    username: string,
+    fileName: string,
+    file: File | null | undefined,
+): Promise<string> {
+    return await FIREBASE_UTILS.uploadFile(storage.ref(`${username}/${fileName}`), file as Blob).then((downloadUrl) => {
+        return downloadUrl;
+    });
+}
+// -----------------------------------------------------------------------------
+
+// Udate user data
+export async function updateUser(
+    username: string,
+    updatedUserData: { bio: string; firstName: string; lastname: string; userProfilePhotoUrl: string },
+): Promise<boolean> {
+    return await FIREBASE_UTILS.updateDocument(firestore.collection(FIREBASE_UTILS.Collection.USERS), {
+        id: username,
+        ...updatedUserData,
+    })
+        .then(() => {
+            return true;
+        })
+        .catch((error) => {
+            console.error('Error while updating post', error);
+            return false;
+        });
 }
 // -----------------------------------------------------------------------------
