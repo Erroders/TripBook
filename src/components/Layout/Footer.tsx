@@ -1,39 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { TABS } from '../../assets/themes/variables';
-
+import { useUserContext } from '../../contexts/LoginedUserContext';
 interface FooterProps {
     selectedTab: string;
 }
 
 const Footer: React.FC<FooterProps> = ({ selectedTab }: FooterProps) => {
     const [currentTab, setCurrentTab] = useState<TABS>(TABS.FEED);
+    const { user } = useUserContext();
 
     useEffect(() => {
-        switch (selectedTab) {
-            case 'home':
-                setCurrentTab(TABS.FEED);
-                break;
-            case 'explore':
-                setCurrentTab(TABS.EXPLORE);
-
-                break;
-            case 'add':
-                setCurrentTab(TABS.CREATE);
-
-                break;
-            case 'notifications':
-                setCurrentTab(TABS.NOTIFICATIONS);
-
-                break;
-            case 'profile':
-                setCurrentTab(TABS.PROFILE);
-                break;
-
-            default:
-                setCurrentTab(TABS.FEED);
-
-                break;
+        if (selectedTab === 'home') {
+            setCurrentTab(TABS.FEED);
+        } else if (selectedTab === 'explore') {
+            setCurrentTab(TABS.EXPLORE);
+        } else if (selectedTab === 'add') {
+            setCurrentTab(TABS.CREATE);
+        } else if (selectedTab === 'notifications') {
+            setCurrentTab(TABS.NOTIFICATIONS);
+        } else if (selectedTab.startsWith('profile')) {
+            setCurrentTab(TABS.PROFILE);
+        } else {
+            setCurrentTab(TABS.FEED);
         }
     }, [selectedTab]);
 
@@ -168,7 +157,7 @@ const Footer: React.FC<FooterProps> = ({ selectedTab }: FooterProps) => {
             </div>
 
             <div className={`self-center text-center`}>
-                <Link to="/profile">
+                <Link to={`/profile/${user?.username}`}>
                     {currentTab === TABS.PROFILE ? (
                         <svg
                             xmlns="http://www.w3.org/2000/svg"

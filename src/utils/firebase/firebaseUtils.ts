@@ -193,19 +193,6 @@ export async function userLoginWithGoogle() {
                 email: user?.email,
                 photoURL: user?.photoURL,
             };
-            // user &&
-            // createUser({
-            //     username: "",
-            //     firstName: user.displayName ? user.displayName.split(" ")[0]: "",
-            //     lastName: user.displayName ? user.displayName.split(" ")[1]: "",
-            //     bio: "",
-            //     email: user.email ? user.email: "",
-            //     userProfilePhotoUrl: user.photoURL ? user.photoURL : "",
-            //     followers: {},
-            //     followings: {},
-            //     noOfTrips: 0,
-            //     currentTrip: "",
-            // })
         })
         .catch((error) => {
             console.error(error);
