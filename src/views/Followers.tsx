@@ -6,12 +6,13 @@ import ListOfUsers from '../components/ProfilePage/ListOfUsers';
 import HomeLayout from '../layouts/MainLayout';
 import Loading from '../components/General/Loading';
 import LoadingContext from '../contexts/LoadingContext';
+import { useUserContext } from '../contexts/LoginedUserContext';
 
-const Followers = () => {
-    // const userLogin = 'nonitmittal';
+const Followers: React.FC = () => {
     const { userId } = useParams<{ userId: string }>();
     const [userData, setuserData] = useState<USER_DATA | null>(null);
     const [followersData, setFollowersData] = useState<USER_DATA[]>([]);
+    const { user: userLogin } = useUserContext();
     const { loading, setLoading } = useContext(LoadingContext);
 
     useEffect(() => {
@@ -21,11 +22,13 @@ const Followers = () => {
     }, []);
 
     useEffect(() => {
-        getUser(userId).then((user) => {
-            if (user) {
-                setuserData(user);
-            }
-        });
+        userLogin?.username === userId
+            ? setuserData(userLogin)
+            : getUser(userId).then((user) => {
+                  if (user) {
+                      setuserData(user);
+                  }
+              });
     }, [userId]);
 
     useEffect(() => {
@@ -40,7 +43,7 @@ const Followers = () => {
     return (
         // TODO check if (username === userLogin) then use followers data from context
         <HomeLayout>
-            {loading ? <Loading /> : <ListOfUsers followData={followersData} selected={'followers'} loading={false} />}{' '}
+            {loading ? <Loading /> : <ListOfUsers followData={followersData} selected={'followers'} />}{' '}
         </HomeLayout>
     );
 };

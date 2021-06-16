@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { USER_DATA } from '../../models/UserData';
 import FollowButton from '../General/FollowButton';
@@ -6,14 +6,10 @@ import FollowButton from '../General/FollowButton';
 interface Props {
     followData: USER_DATA[];
     selected: string;
-    loading: boolean;
 }
 
-const ListOfUsers: React.FC<Props> = ({ followData, selected, loading }: Props) => {
+const ListOfUsers: React.FC<Props> = ({ followData, selected }: Props) => {
     const { userId } = useParams<{ userId: string }>();
-    useEffect(() => {
-        console.log(loading, followData);
-    }, [followData]);
 
     return (
         <>
@@ -52,17 +48,20 @@ const ListOfUsers: React.FC<Props> = ({ followData, selected, loading }: Props) 
                         {followData.map((follower) => {
                             return (
                                 <div className="flex flex-row justify-between items-center" key={follower.username}>
-                                    {/* UserProfilePic + Name */}
-                                    <div className="flex items-center space-x-3">
-                                        <img
-                                            src={follower.userProfilePhotoUrl}
-                                            alt="User Profile Picture"
-                                            className="h-11 w-11 rounded-full object-cover p-0.5"
-                                        />
-                                        <span className="my-auto text-lg font-semibold tracking-wide ml-2">
-                                            {follower.username}
-                                        </span>
-                                    </div>
+                                    <Link to={`/profile/${follower.username}`}>
+                                        {/* UserProfilePic + Name */}
+                                        <div className="flex items-center space-x-3">
+                                            <img
+                                                src={follower.userProfilePhotoUrl}
+                                                alt="User Profile Picture"
+                                                className="h-11 w-11 rounded-full object-cover p-0.5"
+                                            />
+                                            <span className="my-auto text-lg font-semibold tracking-wide ml-2">
+                                                {follower.username}
+                                            </span>
+                                        </div>
+                                    </Link>
+
                                     {/* Follow/Following Button */}
                                     <div>
                                         <FollowButton username={follower.username} />
