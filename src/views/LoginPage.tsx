@@ -22,10 +22,13 @@ const LoginPage = () => {
     return (
         <div className="flex flex-col mx-auto md:w-2/3 lg:w-1/3 relative min-h-screen">
             <div className="flex flex-col justify-evenly h-screen">
-                <div className="flex flex-col px-10 justify-evenly">
-                    <img src="./logo512.png" alt="TripBook Logo" className="p-7 lg:px-20 object-contain" />
+                <div className="flex flex-col justify-around">
+                    <img src="./logo-min.png" alt="TripBook Logo" className="py-14 px-20 object-contain" />
+                    <img src={background} alt="Background Image" className="object-contain mx-3" />
+                </div>
+                <div className="px-10">
                     <button
-                        className="w-full py-3 bg-white rounded shadow hover:bg-red-400 hover:text-gray-50 focus:outline-none font-semibold hover:shadow-xl border-gray-100 border"
+                        className="w-full py-3 bg-white rounded shadow-lg hover:bg-gray-300 focus:outline-none font-semibold hover:shadow-xl border-gray-100 border"
                         onClick={() => {
                             userLoginWithGoogle().then((userLoggedIn) => {
                                 if (!userLoggedIn?.existing) {
@@ -61,7 +64,6 @@ const LoginPage = () => {
                         </div>
                     </button>
                 </div>
-                <img src={background} alt="Background Image" className="object-contain mx-1" />
             </div>
 
             {visible && <FillDetails displayName={displayName} email={email} photoURL={photoURL} />}
