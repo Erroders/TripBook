@@ -1,11 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useUserContext } from '../../contexts/LoginedUserContext';
 import { useHistory } from 'react-router';
-import { createUser } from '../../utils/controller/UserController';
+import { createUser, getUser } from '../../utils/controller/UserController';
 import { userConverter } from '../../utils/controller/UserController';
 import firebase from '../../utils/firebase/firebase';
 import { getUserByEmail } from '../../utils/controller/UserController';
-
 interface Props {
     displayName: string | null | undefined;
     email: string | null | undefined;
@@ -14,32 +13,40 @@ interface Props {
 
 const FillDetails: React.FC<Props> = ({ displayName, email, photoURL }: Props) => {
     const { setUser } = useUserContext();
+    const [exist, setexist] = useState(false);
     const history = useHistory();
 
-    const SignUp = (event: React.ChangeEvent<HTMLFormElement>) => {
+    const SignUp = async (event: React.ChangeEvent<HTMLFormElement>) => {
         event.preventDefault();
-        createUser({
-            username: event.target.username.value,
-            firstName: event.target.firstName.value,
-            lastName: event.target.lastName.value,
-            bio: event.target.bio.value,
-            email: event.target.email.value,
-            userProfilePhotoUrl: photoURL ? photoURL : '',
-            followers: {},
-            followings: {},
-            noOfTrips: 0,
-            currentTrip: '',
-        });
 
-        const cb = (snapshot: firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData>) => {
-            if (!snapshot.empty) {
-                snapshot.forEach((userDoc) => {
-                    setUser && setUser(userConverter.fromFirestore({ id: userDoc.id, ...userDoc.data() }));
+        await getUser(event.target.username.value).then((user) => {
+            if (user) {
+                setexist(true);
+            } else {
+                setexist(false);
+                createUser({
+                    username: event.target.username.value,
+                    firstName: event.target.firstName.value,
+                    lastName: event.target.lastName.value,
+                    bio: event.target.bio.value,
+                    email: event.target.email.value,
+                    userProfilePhotoUrl: photoURL ? photoURL : '',
+                    followers: {},
+                    followings: {},
+                    noOfTrips: 0,
+                    currentTrip: '',
                 });
+                const cb = (snapshot: firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData>) => {
+                    if (!snapshot.empty) {
+                        snapshot.forEach((userDoc) => {
+                            setUser && setUser(userConverter.fromFirestore({ id: userDoc.id, ...userDoc.data() }));
+                        });
+                    }
+                };
+                getUserByEmail(email ? email : '', cb);
+                history.push('/home');
             }
-        };
-        getUserByEmail(email ? email : '', cb);
-        history.push('/home');
+        });
     };
 
     return (
@@ -62,6 +69,9 @@ const FillDetails: React.FC<Props> = ({ displayName, email, photoURL }: Props) =
                         placeholder="Enter Username"
                         className="px-3 py-1.5 font-semibold rounded-md focus:outline-none focus:ring w-full ease-linear transition-all duration-50 tracking-wide border border-gray-400"
                     />
+                    <p className={`${exist ? 'inline' : 'hidden'} text-xs text-right text-red-500 `}>
+                        UserName already exists !!
+                    </p>
                 </div>
                 <div className="w-full flex flex-col py-1.5">
                     <p className="font-medium text-gray-600 text-sm py-1">First Name</p>
@@ -117,9 +127,3 @@ const FillDetails: React.FC<Props> = ({ displayName, email, photoURL }: Props) =
 };
 
 export default FillDetails;
-
-// const FillDetails = () => {
-//     return <div></div>;
-// };
-
-// export default FillDetails;

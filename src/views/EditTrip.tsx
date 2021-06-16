@@ -6,9 +6,11 @@ import { createPost, uploadPostImage } from '../utils/controller/PostController'
 import { useParams } from 'react-router';
 import { v4 as uuidv4 } from 'uuid';
 import { POST } from '../models/TripData';
+import { useHistory } from 'react-router-dom';
 
 const EditTrip: React.FC = () => {
     const { userId, tripId, index } = useParams<{ userId: string; tripId: string; index: string }>();
+    const history = useHistory();
     const imageRef = useRef<HTMLInputElement>(null);
 
     const [imageUrl, setImageUrl] = useState('');
@@ -46,15 +48,19 @@ const EditTrip: React.FC = () => {
             caption: details,
             postsUrl: [imageUrl],
             index: Number.parseInt(index),
-        } as POST).then((value) => {
-            if (value) {
-                console.log('Moment Uploaded', {
-                    imageUrl,
-                    title,
-                    details,
-                });
-            }
-        });
+        } as POST)
+            .then((value) => {
+                if (value) {
+                    console.log('Moment Uploaded', {
+                        imageUrl,
+                        title,
+                        details,
+                    });
+                }
+            })
+            .then(() => {
+                history.goBack();
+            });
     };
 
     return (
