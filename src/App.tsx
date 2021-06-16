@@ -16,6 +16,7 @@ import { USER_DATA } from './models/UserData';
 import { auth } from './utils/firebase/firebase';
 import PrivateRoute from './components/Route/PrivateRoute';
 import LoginPage from './views/LoginPage';
+import EditProfile from './views/EditProfile';
 
 const App: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(true);
@@ -45,6 +46,7 @@ const App: React.FC = () => {
                         <PrivateRoute path="/profile/:userId" exact={true} component={UserProfile} />
                         <PrivateRoute path="/profile/:userId/followers" exact={true} component={Followers} />
                         <PrivateRoute path="/profile/:userId/followings" exact={true} component={Followings} />
+
                         <Redirect from="/" to="/home" />
                         <Route />
                     </Switch>

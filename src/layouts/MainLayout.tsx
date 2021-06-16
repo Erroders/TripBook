@@ -12,7 +12,7 @@ const HomeLayout: React.FC<Props> = ({ children }: Props) => {
     return (
         <div className="flex flex-col mx-auto md:w-2/3 lg:w-1/3 relative min-h-screen">
             <Header />
-            <main className="min-h-screen">{children}</main>
+            <main>{children}</main>
             <Footer selectedTab={pathname.slice(1)} />
         </div>
     );
