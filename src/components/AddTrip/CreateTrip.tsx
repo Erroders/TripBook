@@ -5,8 +5,12 @@ import { createTrip, uploadTripCoverImage } from '../../utils/controller/TripCon
 import { TRIP_DATA } from '../../models/TripData';
 import { XBackButton } from '../EditTrip/XBackButton';
 import ClickButton from '../General/ClickButton';
+import { useUserContext } from '../../contexts/LoginedUserContext';
+import { useHistory } from 'react-router-dom';
 
 const CreateTrip: React.FC = () => {
+    const { user } = useUserContext();
+    const history = useHistory();
     const imageRef = useRef<HTMLInputElement>(null);
 
     const [userId, setUserId] = useState('');
@@ -19,9 +23,7 @@ const CreateTrip: React.FC = () => {
 
     useEffect(() => {
         setFileName(uuidv4());
-
-        // TODO: Connect with auth
-        setUserId('akathecoder');
+        user?.username && setUserId(user?.username);
     }, []);
 
     const handleImageUpload = () => {
@@ -53,15 +55,19 @@ const CreateTrip: React.FC = () => {
             userProfilePhotoUrl: '',
             lastUpdated: new Date(),
             posts: [],
-        } as TRIP_DATA).then((value) => {
-            if (value) {
-                console.log('Moment Uploaded', {
-                    imageUrl,
-                    title,
-                    details,
-                });
-            }
-        });
+        } as TRIP_DATA)
+            .then((value) => {
+                if (value) {
+                    console.log('Moment Uploaded', {
+                        imageUrl,
+                        title,
+                        details,
+                    });
+                }
+            })
+            .then(() => {
+                history.goBack();
+            });
     };
 
     return (
