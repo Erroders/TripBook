@@ -54,6 +54,7 @@ const FillDetails: React.FC<Props> = ({ displayName, email, photoURL }: Props) =
                 />
                 <div className="w-full flex flex-col py-1.5">
                     <p className="font-medium text-gray-600 text-sm py-1">Username</p>
+
                     <input
                         type="text"
                         name="username"
@@ -69,7 +70,7 @@ const FillDetails: React.FC<Props> = ({ displayName, email, photoURL }: Props) =
                         name="firstName"
                         required
                         placeholder="Enter firstName"
-                        defaultValue={displayName?.split(' ')[0]}
+                        defaultValue={displayName!.split(' ')[0]}
                         className="px-3 py-1.5 font-semibold rounded-md focus:outline-none focus:ring w-full ease-linear transition-all duration-50 tracking-wide border border-gray-400 placeholder-gray-300"
                     />
                 </div>
@@ -80,7 +81,7 @@ const FillDetails: React.FC<Props> = ({ displayName, email, photoURL }: Props) =
                         name="lastName"
                         required
                         placeholder="Enter lastName"
-                        defaultValue={displayName?.split(' ')[1]}
+                        defaultValue={displayName!.split(' ')[1]}
                         className="px-3 py-1.5 font-semibold rounded-md focus:outline-none focus:ring w-full ease-linear transition-all duration-50 tracking-wide border border-gray-400 placeholder-gray-300"
                     />
                 </div>
