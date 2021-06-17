@@ -27,11 +27,27 @@ Working demo is available on this [link](https://tripbook.tk).
 
 <!-- <iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450" src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fproto%2FOtdRVVifZX2WzyifdX0Gjf%2FTripBook%3Fnode-id%3D26%253A4%26scaling%3Dscale-down%26page-id%3D26%253A2" allowfullscreen></iframe> -->
 
-![Wireframe Screenshot](https://user-images.githubusercontent.com/50939480/122399696-a67b2900-cf98-11eb-824e-1b289c57f7b2.png)
+<!-- ![Wireframe Screenshot](https://user-images.githubusercontent.com/50939480/122399696-a67b2900-cf98-11eb-824e-1b289c57f7b2.png) -->
+
+![Header & Footer](https://user-images.githubusercontent.com/50939480/122414938-214a4100-cfa5-11eb-94a4-8ce16b87492f.png)
+![Home Feed](https://user-images.githubusercontent.com/50939480/122414944-21e2d780-cfa5-11eb-8f92-8d214e226ce6.png)
+![Personal Profile](https://user-images.githubusercontent.com/50939480/122414947-227b6e00-cfa5-11eb-9533-ac5123c054d9.png)
+![Profile](https://user-images.githubusercontent.com/50939480/122414951-23140480-cfa5-11eb-8ffd-30a8ab0fcfd6.png)
+![Search](https://user-images.githubusercontent.com/50939480/122414955-23140480-cfa5-11eb-8f0f-b2428f57b2b4.png)
 
 ## Screenshots
 
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+![1](https://user-images.githubusercontent.com/50939480/122433551-f74c4b00-cfb3-11eb-87db-6fe6e4da86d8.jpg)
+
+<!-- ![2](https://user-images.githubusercontent.com/50939480/122418405-cebe5400-cfa7-11eb-8017-2b4512aac344.png) -->
+
+![4](https://user-images.githubusercontent.com/50939480/122418417-cfef8100-cfa7-11eb-8bfd-210a7277053e.jpeg)
+![3](https://user-images.githubusercontent.com/50939480/122418413-cfef8100-cfa7-11eb-9139-948a6a2c0279.jpeg)
+![6](https://user-images.githubusercontent.com/50939480/122418426-d1b94480-cfa7-11eb-958a-b4e9f687693c.jpeg)
+![5](https://user-images.githubusercontent.com/50939480/122418425-d120ae00-cfa7-11eb-97b5-54b04c001091.jpeg)
+![4](https://user-images.githubusercontent.com/50939480/122418421-d0881780-cfa7-11eb-9161-394a7a69387b.jpeg)
+
+<!-- ![7](https://user-images.githubusercontent.com/50939480/122418431-d1b94480-cfa7-11eb-85fd-6105eb1e98a8.jpeg) -->
 
 ## Tech Stack
 
