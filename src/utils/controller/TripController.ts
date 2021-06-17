@@ -4,6 +4,7 @@ import { TRIP_DATA, POST } from '../../models/TripData';
 import firebase, { firestore, storage } from '../firebase/firebase';
 import { getPosts } from './PostController';
 import { getUser } from './UserController';
+import { USER_FOLLOW } from '../../models/UserData';
 // -----------------------------------------------------------------------------
 
 class Trip implements TRIP_DATA {
@@ -192,4 +193,26 @@ export async function getCurrentTrip(username: string): Promise<string | undefin
             return user.currentTrip;
         }
     });
+}
+
+// Get HomeFeeds
+export async function getHomeFeeds(followings: USER_FOLLOW) {
+    const feeds: TRIP_DATA[] = [];
+    let tripCollectionGroupRef = firestore.collectionGroup('TRIPS');
+    if (Object.keys(followings).length !== 0) {
+        for (const following of Object.keys(followings)) {
+            tripCollectionGroupRef = tripCollectionGroupRef.where('username', '==', following);
+        }
+        await tripCollectionGroupRef
+            .orderBy('lastUpdated')
+            .get()
+            .then((snapshot) => {
+                snapshot.forEach((doc) => {
+                    feeds.push(tripConverter.fromFirestore({ id: doc.id, ...doc.data() }, []));
+                });
+            });
+    } else {
+        console.log('no follwings');
+    }
+    return feeds;
 }

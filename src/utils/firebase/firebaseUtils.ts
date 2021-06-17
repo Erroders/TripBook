@@ -184,8 +184,6 @@ export async function userLoginWithGoogle() {
         .signInWithPopup(provider)
         .then((result) => {
             const user = result.user;
-            console.log(result?.additionalUserInfo?.isNewUser);
-            console.log(user);
 
             return {
                 existing: result?.additionalUserInfo?.isNewUser,

@@ -48,6 +48,12 @@ export async function createPost(username: string, tripId: string, post: POST & 
         postConverter.toFireStore(post),
     )
         .then(() => {
+            firestore
+                .collection(FIREBASE_UTILS.Collection.USERS)
+                .doc(username)
+                .collection(FIREBASE_UTILS.Collection.TRIPS)
+                .doc(tripId)
+                .update({ noOfPosts: firebase.firestore.FieldValue.increment(1) });
             return true;
         })
         .catch((error) => {
@@ -83,6 +89,12 @@ export async function deletePost(username: string, tripId: string, postId: strin
         postId,
     )
         .then(() => {
+            firestore
+                .collection(FIREBASE_UTILS.Collection.USERS)
+                .doc(username)
+                .collection(FIREBASE_UTILS.Collection.TRIPS)
+                .doc(tripId)
+                .update({ noOfPosts: firebase.firestore.FieldValue.increment(-1) });
             return true;
         })
         .catch((error) => {

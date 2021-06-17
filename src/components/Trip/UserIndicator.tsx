@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 interface UserIndicatorProps {
     userProfilePicSrc: string;
@@ -11,14 +12,14 @@ const UserIndicator: React.FC<UserIndicatorProps> = ({ userProfilePicSrc, userna
     return (
         <>
             <div className="flex mt-2">
-                <a href="#" className="flex">
+                <Link to={`/profile/${username}`} className="flex">
                     <img
                         src={userProfilePicSrc ? userProfilePicSrc : errorUserImage}
                         alt="User Profile Picture"
-                        className="h-userProfilePicSmall rounded-full border border-primary-blue"
+                        className="h-userProfilePicSmall w-userProfilePicSmall rounded-full border border-primary-blue"
                     />
                     <span className="my-auto text-lg font-semibold ml-2">{username}</span>
-                </a>
+                </Link>
             </div>
         </>
     );
