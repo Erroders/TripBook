@@ -25,7 +25,7 @@ Working demo is available on this [link](https://tripbook.tk).
 
 ## Wireframes
 
-<iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450" src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fproto%2FOtdRVVifZX2WzyifdX0Gjf%2FTripBook%3Fnode-id%3D26%253A4%26scaling%3Dscale-down%26page-id%3D26%253A2" allowfullscreen></iframe>
+<!-- <iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450" src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fproto%2FOtdRVVifZX2WzyifdX0Gjf%2FTripBook%3Fnode-id%3D26%253A4%26scaling%3Dscale-down%26page-id%3D26%253A2" allowfullscreen></iframe> -->
 
 ![Wireframe Screenshot](https://user-images.githubusercontent.com/50939480/122399696-a67b2900-cf98-11eb-824e-1b289c57f7b2.png)
 
