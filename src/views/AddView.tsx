@@ -10,8 +10,6 @@ const AddView: React.FC = () => {
     const { setLoading } = useContext(LoadingContext);
 
     useEffect(() => {
-        console.log(history.action);
-
         if (history.action == 'POP') {
             history.goBack();
         } else {

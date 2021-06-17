@@ -23,7 +23,6 @@ export async function addDocument<Document extends { id?: string }>(
             .doc(id)
             .set(data, { merge: merge })
             .then(() => {
-                console.log('Document successfully written!');
                 return id;
             })
             .catch((error) => {
@@ -34,7 +33,6 @@ export async function addDocument<Document extends { id?: string }>(
         return await collectionRef
             .add(data)
             .then((docRef) => {
-                console.log('Document written with ID: ', docRef.id);
                 return docRef.id;
             })
             .catch((error) => {
@@ -72,7 +70,6 @@ export async function getDocument(
         .get()
         .then((doc) => {
             if (doc.exists) {
-                console.log('Document data:', { id: doc.id, ...doc.data() });
                 return { id: doc.id, ...doc.data() };
             } else {
                 console.log('No such document!');
@@ -125,7 +122,6 @@ export async function uploadFile(
     return await fileRef
         .put(file)
         .then((snapshot) => {
-            console.log('Uploaded a blob or file!');
             return snapshot.ref.getDownloadURL();
         })
         .catch((error) => {
@@ -178,7 +174,6 @@ export async function userLoginWithGoogle() {
     const provider = new firebase.auth.GoogleAuthProvider();
     provider.addScope('profile');
     provider.addScope('email');
-    console.log(provider);
     return await firebase
         .auth()
         .signInWithPopup(provider)
