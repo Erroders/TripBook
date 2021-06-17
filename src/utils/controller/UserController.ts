@@ -2,6 +2,7 @@
 import * as FIREBASE_UTILS from '../firebase/firebaseUtils';
 import { USER_DATA, USER_FOLLOW } from '../../models/UserData';
 import firebase, { firestore, storage } from '../firebase/firebase';
+import _ from 'lodash';
 // -----------------------------------------------------------------------------
 
 // User class
@@ -228,4 +229,46 @@ export async function updateUser(
 }
 // -----------------------------------------------------------------------------
 
-//
+// Search user by name
+export async function getUsersByName(nameToSearch: string): Promise<User[]> {
+    let userCollectionGroupRef = firestore.collectionGroup(FIREBASE_UTILS.Collection.USERS);
+    const usersFound: User[] = [];
+
+    let [fName, lName] = nameToSearch.split(' ');
+    fName = _.capitalize(fName);
+    lName = _.capitalize(lName);
+    if (fName) {
+        userCollectionGroupRef = userCollectionGroupRef.where('firstName', '==', fName);
+    }
+    if (lName) {
+        userCollectionGroupRef = userCollectionGroupRef.where('lastName', '==', lName);
+    }
+    console.log(userCollectionGroupRef);
+    await userCollectionGroupRef.get().then((snapshot) => {
+        if (!snapshot.empty) {
+            snapshot.forEach((userDoc) => {
+                usersFound.push(userConverter.fromFirestore({ id: userDoc.id, ...userDoc.data() }));
+            });
+        }
+    });
+
+    return usersFound;
+}
+// -----------------------------------------------------------------------------
+
+// Search by username
+export async function getUserByUsername(username: string): Promise<User | null> {
+    console.log('called');
+    return await firestore
+        .collection(FIREBASE_UTILS.Collection.USERS)
+        .doc(username)
+        .get()
+        .then((doc) => {
+            if (doc.exists) {
+                return userConverter.fromFirestore({ id: doc.id, ...doc.data() });
+            } else {
+                return null;
+            }
+        });
+}
+// -----------------------------------------------------------------------------

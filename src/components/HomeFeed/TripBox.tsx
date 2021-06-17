@@ -40,7 +40,7 @@ const TripBox: React.FC<ThumbnailProps> = ({
             </Link>
             <Link to={`/user/${username}/${id}`}>
                 {/* Cover Image */}
-                <div className="flex justify-center">
+                <div className="flex flex-col justify-center">
                     <img src={coverImage} alt="Trip Cover Image" className="object-cover" />
                 </div>
                 {/* Trip Title + details + no.of posts + lastUpdated */}

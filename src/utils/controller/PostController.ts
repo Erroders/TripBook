@@ -53,7 +53,10 @@ export async function createPost(username: string, tripId: string, post: POST & 
                 .doc(username)
                 .collection(FIREBASE_UTILS.Collection.TRIPS)
                 .doc(tripId)
-                .update({ noOfPosts: firebase.firestore.FieldValue.increment(1) });
+                .update({
+                    noOfPosts: firebase.firestore.FieldValue.increment(1),
+                    lastUpdated: firebase.firestore.FieldValue.serverTimestamp(),
+                });
             return true;
         })
         .catch((error) => {
