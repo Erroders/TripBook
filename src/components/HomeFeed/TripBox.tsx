@@ -26,16 +26,18 @@ const TripBox: React.FC<ThumbnailProps> = ({
     return (
         <div className="relative font-display mb-7 mt-2">
             {/* UserProfilePic + Name */}
-            <div className="flex items-center px-2 py-2 border-b border-gray-300">
-                <a href="#" className="flex">
-                    <img
-                        src={userProfilePhotoUrl}
-                        alt="User Profile Picture"
-                        className="h-userProfilePicSmall w-userProfilePicSmall rounded-full border border-primary-blue object-cover"
-                    />
-                    <span className="my-auto text-lg font-semibold tracking-wide ml-2">{username}</span>
-                </a>
-            </div>
+            <Link to={`/profile/${username}`}>
+                <div className="flex items-center px-2 py-2 border-b border-gray-300">
+                    <a href="#" className="flex">
+                        <img
+                            src={userProfilePhotoUrl}
+                            alt="User Profile Picture"
+                            className="h-userProfilePicSmall w-userProfilePicSmall rounded-full border border-primary-blue object-cover"
+                        />
+                        <span className="my-auto text-lg font-semibold tracking-wide ml-2">{username}</span>
+                    </a>
+                </div>{' '}
+            </Link>
             <Link to={`/user/${username}/${id}`}>
                 {/* Cover Image */}
                 <div className="flex justify-center">
