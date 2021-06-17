@@ -33,7 +33,7 @@ const HomeFeed: React.FC = () => {
         <Loading />
     ) : (
         <HomeLayout>
-            <div className="pb-14">
+            <div>
                 {feedData.length !== 0
                     ? feedData.map((feed, index) => {
                           return (
