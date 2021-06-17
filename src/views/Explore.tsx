@@ -37,7 +37,6 @@ const Explore: React.FC = () => {
 
                                     if (e.key === 'Enter') {
                                         getUserByUsername(searchQuery).then((userData) => {
-                                            console.log(userData);
                                             userData ? setFollowerData([userData]) : setFollowerData([]);
                                         });
                                     }
@@ -67,10 +66,8 @@ const Explore: React.FC = () => {
                                     setSearchQuery('');
                                 }
                                 if (e.key === ' ' || e.key === 'Enter') {
-                                    console.log(searchByUsername, searchQuery);
                                     getUsersByName(searchQuery).then((usersFound) => {
                                         if (usersFound.length !== 0) {
-                                            console.log(usersFound);
                                             setFollowerData(usersFound);
                                         }
                                     });

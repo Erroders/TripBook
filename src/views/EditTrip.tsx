@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { XBackButton } from '../components/EditTrip/XBackButton';
 import ClickButton from '../components/General/ClickButton';
 import { PlusIcon } from '@heroicons/react/outline';
@@ -7,11 +7,13 @@ import { useParams } from 'react-router';
 import { v4 as uuidv4 } from 'uuid';
 import { POST } from '../models/TripData';
 import { useHistory } from 'react-router-dom';
+import LoadingContext from '../contexts/LoadingContext';
 
 const EditTrip: React.FC = () => {
     const { userId, tripId, index } = useParams<{ userId: string; tripId: string; index: string }>();
     const history = useHistory();
     const imageRef = useRef<HTMLInputElement>(null);
+    const { setLoading } = useContext(LoadingContext);
 
     const [imageUrl, setImageUrl] = useState('');
     const [title, setTitle] = useState('');
@@ -22,6 +24,10 @@ const EditTrip: React.FC = () => {
 
     useEffect(() => {
         setFileName(uuidv4());
+        setLoading && setLoading(false);
+        return () => {
+            setLoading && setLoading(true);
+        };
     }, []);
 
     const handleImageUpload = () => {
@@ -42,7 +48,6 @@ const EditTrip: React.FC = () => {
             return;
         }
 
-        console.log('ddddddddddddd');
         createPost(userId, tripId, {
             title: title,
             caption: details,
@@ -59,7 +64,7 @@ const EditTrip: React.FC = () => {
                 }
             })
             .then(() => {
-                history.goBack();
+                history.push(`/user/${userId}/${tripId}`);
             });
     };
 

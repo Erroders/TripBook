@@ -94,7 +94,6 @@ export async function getFollowers(followers: USER_FOLLOW): Promise<User[]> {
             });
         }),
     );
-    console.log(followersData.length);
 
     return followersData;
 }
@@ -243,7 +242,6 @@ export async function getUsersByName(nameToSearch: string): Promise<User[]> {
     if (lName) {
         userCollectionGroupRef = userCollectionGroupRef.where('lastName', '==', lName);
     }
-    console.log(userCollectionGroupRef);
     await userCollectionGroupRef.get().then((snapshot) => {
         if (!snapshot.empty) {
             snapshot.forEach((userDoc) => {
@@ -258,7 +256,6 @@ export async function getUsersByName(nameToSearch: string): Promise<User[]> {
 
 // Search by username
 export async function getUserByUsername(username: string): Promise<User | null> {
-    console.log('called');
     return await firestore
         .collection(FIREBASE_UTILS.Collection.USERS)
         .doc(username)

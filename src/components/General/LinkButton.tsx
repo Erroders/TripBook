@@ -9,8 +9,6 @@ interface LinkButtonProps {
 }
 
 const LinkButton: React.FC<LinkButtonProps> = ({ heroIcon, link, text, color }: LinkButtonProps) => {
-    console.log(link);
-
     return (
         <Link
             to={link}
