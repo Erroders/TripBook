@@ -13,7 +13,6 @@ const CreateTrip: React.FC = () => {
     const history = useHistory();
     const imageRef = useRef<HTMLInputElement>(null);
 
-    const [userId, setUserId] = useState('');
     const [imageUrl, setImageUrl] = useState('');
     const [title, setTitle] = useState('');
     const [details, setDetails] = useState('');
@@ -23,12 +22,11 @@ const CreateTrip: React.FC = () => {
 
     useEffect(() => {
         setFileName(uuidv4());
-        user?.username && setUserId(user?.username);
     }, []);
 
     const handleImageUpload = () => {
-        if (userId && fileName) {
-            uploadTripCoverImage(userId, uuidv4(), fileName, imageRef.current?.files?.item(0)).then((value) => {
+        if (user!.username && fileName) {
+            uploadTripCoverImage(user!.username, uuidv4(), fileName, imageRef.current?.files?.item(0)).then((value) => {
                 setImageUrl(value);
             });
         }
@@ -42,17 +40,17 @@ const CreateTrip: React.FC = () => {
     };
 
     const handleSubmit = () => {
-        if (!title || !details || !checkImage() || !userId) {
+        if (!title || !details || !checkImage() || !user!.username) {
             return;
         }
 
-        createTrip(userId, {
+        createTrip(user!.username, {
             coverImage: imageUrl,
             details: details,
             title: title,
             noOfPosts: 0,
-            username: userId,
-            userProfilePhotoUrl: '',
+            username: user!.username,
+            userProfilePhotoUrl: user!.userProfilePhotoUrl,
             lastUpdated: new Date(),
             posts: [],
         } as TRIP_DATA)
