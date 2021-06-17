@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import TripDetails from '../components/Trip/TripDetails';
 import Post from '../components/Trip/Post';
 import EndCredit from '../components/Trip/EndCredit';
@@ -11,11 +11,14 @@ import LinkButton from '../components/General/LinkButton';
 import { PlusIcon } from '@heroicons/react/outline';
 import { useUserContext } from '../contexts/LoginedUserContext';
 import ClickButton from '../components/General/ClickButton';
+import LoadingContext from '../contexts/LoadingContext';
+import Loading from '../components/General/Loading';
 
 const Trip: React.FC = () => {
     const { user } = useUserContext();
     const history = useHistory();
     const { userId, tripId } = useParams<{ userId: string; tripId: string }>();
+    const { loading, setLoading } = useContext(LoadingContext);
 
     const [data, setData] = useState<TRIP_DATA>({
         id: '',
@@ -37,11 +40,17 @@ const Trip: React.FC = () => {
                 if (data) {
                     setData(data);
                 }
+                setLoading && setLoading(false);
             });
         }
+        return () => {
+            setLoading && setLoading(true);
+        };
     }, []);
 
-    return (
+    return loading ? (
+        <Loading />
+    ) : (
         <div>
             <div ref={scrollTopDiv} />
 
