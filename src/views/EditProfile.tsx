@@ -69,7 +69,7 @@ const EditProfile: React.FC = () => {
                                     onError={() => {
                                         setImageUrl(errorImage);
                                     }}
-                                    className="object-cover max-h-40 rounded-full"
+                                    className="object-cover w-32 h-32 rounded-full"
                                 />
                             </label>
                         </div>
