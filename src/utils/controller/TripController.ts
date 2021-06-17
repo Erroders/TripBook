@@ -197,22 +197,34 @@ export async function getCurrentTrip(username: string): Promise<string | undefin
 
 // Get HomeFeeds
 export async function getHomeFeeds(followings: USER_FOLLOW) {
-    const feeds: TRIP_DATA[] = [];
-    let tripCollectionGroupRef = firestore.collectionGroup('TRIPS');
+    let feeds: TRIP_DATA[] = [];
+    const tripCollectionGroupRef = firestore.collectionGroup(FIREBASE_UTILS.Collection.TRIPS);
     if (Object.keys(followings).length !== 0) {
         for (const following of Object.keys(followings)) {
-            tripCollectionGroupRef = tripCollectionGroupRef.where('username', '==', following);
-        }
-        await tripCollectionGroupRef
-            .orderBy('lastUpdated')
-            .get()
-            .then((snapshot) => {
-                snapshot.forEach((doc) => {
-                    feeds.push(tripConverter.fromFirestore({ id: doc.id, ...doc.data() }, []));
+            await tripCollectionGroupRef
+                .where('username', '==', following)
+                .orderBy('lastUpdated', 'desc')
+                .get()
+                .then((snapshot) => {
+                    console.log(snapshot);
+                    snapshot.forEach((doc) => {
+                        feeds.push(tripConverter.fromFirestore({ id: doc.id, ...doc.data() }, []));
+                    });
                 });
-            });
+        }
+
+        feeds = feeds.sort((a, b) => {
+            if (a.lastUpdated < b.lastUpdated) {
+                return 1;
+            }
+            if (a.lastUpdated > b.lastUpdated) {
+                return -1;
+            }
+            return 0;
+        });
+        console.log(feeds);
     } else {
-        console.log('no follwings');
+        console.log('no followings');
     }
     return feeds;
 }

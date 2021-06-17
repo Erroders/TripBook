@@ -1,11 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useHistory } from 'react-router';
 import { useUserContext } from '../contexts/LoginedUserContext';
+import LoadingContext from '../contexts/LoadingContext';
 import { getCurrentTrip } from '../utils/controller/TripController';
 
 const AddView: React.FC = () => {
     const { user } = useUserContext();
     const history = useHistory();
+    const { setLoading } = useContext(LoadingContext);
 
     useEffect(() => {
         console.log(history.action);
@@ -23,6 +25,10 @@ const AddView: React.FC = () => {
                 });
             }
         }
+
+        return () => {
+            setLoading && setLoading(true);
+        };
     }, []);
 
     return <></>;
