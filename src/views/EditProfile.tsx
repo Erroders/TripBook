@@ -38,7 +38,7 @@ const EditProfile: React.FC = () => {
         updateUser(username, {
             bio: bio,
             firstName: firstName,
-            lastname: lastName,
+            lastName: lastName,
             userProfilePhotoUrl: imageUrl,
         }).then(() => {
             window.history.back();
