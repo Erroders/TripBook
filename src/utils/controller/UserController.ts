@@ -198,7 +198,7 @@ export async function uploadUserProfileImage(
 // Udate user data
 export async function updateUser(
     username: string,
-    updatedUserData: { bio: string; firstName: string; lastname: string; userProfilePhotoUrl: string },
+    updatedUserData: { bio: string; firstName: string; lastName: string; userProfilePhotoUrl: string },
 ): Promise<boolean> {
     return await FIREBASE_UTILS.updateDocument(firestore.collection(FIREBASE_UTILS.Collection.USERS), {
         id: username,
