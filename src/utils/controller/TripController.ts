@@ -178,7 +178,6 @@ export async function setCurrentTrip(username: string, tripId: string): Promise<
         currentTrip: tripId,
     })
         .then(() => {
-            console.log(`${username} : currentTrip set to ${tripId}`);
             return true;
         })
         .catch(() => {
@@ -206,7 +205,6 @@ export async function getHomeFeeds(followings: USER_FOLLOW) {
                 .orderBy('lastUpdated', 'desc')
                 .get()
                 .then((snapshot) => {
-                    console.log(snapshot);
                     snapshot.forEach((doc) => {
                         feeds.push(tripConverter.fromFirestore({ id: doc.id, ...doc.data() }, []));
                     });
@@ -222,7 +220,6 @@ export async function getHomeFeeds(followings: USER_FOLLOW) {
             }
             return 0;
         });
-        console.log(feeds);
     } else {
         console.log('no followings');
     }

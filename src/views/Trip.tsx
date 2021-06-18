@@ -36,12 +36,14 @@ const Trip: React.FC = () => {
     useEffect(() => {
         window.scrollTo(0, 0);
         if (userId && tripId) {
-            getTrip(userId, tripId).then((data) => {
-                if (data) {
-                    setData(data);
-                }
-                setLoading && setLoading(false);
-            });
+            setTimeout(() => {
+                getTrip(userId, tripId).then((data) => {
+                    if (data) {
+                        setData(data);
+                    }
+                    setLoading && setLoading(false);
+                });
+            }, 1000);
         }
         return () => {
             setLoading && setLoading(true);

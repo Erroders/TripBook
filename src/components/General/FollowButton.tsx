@@ -21,11 +21,14 @@ const FollowButton: React.FC<Props> = ({ username }: Props) => {
     }, []);
 
     useEffect(() => {
-        setfollow(false);
-        user &&
-            Object.keys(user.followings).find((userFollowing) =>
-                userFollowing === username ? setfollow(true) : setfollow(false),
-            );
+        if (user) {
+            const found = Object.keys(user.followings).includes(username);
+            if (found) {
+                setfollow(true);
+            } else {
+                setfollow(false);
+            }
+        }
         setLoading && setLoading(false);
     }, [user]);
 

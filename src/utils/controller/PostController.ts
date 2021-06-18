@@ -71,12 +71,16 @@ export async function getPosts(
     tripRef: firebase.firestore.DocumentReference<firebase.firestore.DocumentData>,
 ): Promise<Array<POST>> {
     const posts: POST[] = [];
-    return await FIREBASE_UTILS.getAllDocument(tripRef.collection(FIREBASE_UTILS.Collection.POSTS)).then((postDocs) => {
-        postDocs.forEach((post) => {
-            posts.push(postConverter.fromFirestore({ id: post.id, ...post.data() }));
+    return await tripRef
+        .collection(FIREBASE_UTILS.Collection.POSTS)
+        .orderBy('index', 'asc')
+        .get()
+        .then((postDocs) => {
+            postDocs.forEach((post) => {
+                posts.push(postConverter.fromFirestore({ id: post.id, ...post.data() }));
+            });
+            return posts;
         });
-        return posts;
-    });
 }
 // -----------------------------------------------------------------------------
 

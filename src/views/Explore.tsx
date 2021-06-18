@@ -9,7 +9,7 @@ const Explore: React.FC = () => {
     const [followerData, setFollowerData] = useState<USER_DATA[]>([]);
     const [searchByUsername, setSearchByUsername] = useState<boolean>(false);
     const [searchQuery, setSearchQuery] = useState<string>('');
-    const [searchStarted, setSearchStarted] = useState<boolean>(false);
+    const [searchStarted, setSearchStarted] = useState<boolean>(true);
 
     return (
         <HomeLayout>
@@ -24,25 +24,31 @@ const Explore: React.FC = () => {
                                 id="searchQuery"
                                 className="w-full outline-none focus:outline-none"
                                 value={searchQuery}
+                                onFocusCapture={(e) => {
+                                    if (e.target.value === '') {
+                                        setSearchStarted(false);
+                                    }
+                                }}
                                 onKeyDown={(e: any) => {
                                     setSearchStarted(true);
+
                                     if (e.key === 'Backspace') {
                                         setFollowerData([]);
                                     }
-                                    setSearchStarted(true);
                                     if (e.key === 'Backspace' && e.target.value.length === 0) {
-                                        setSearchStarted(false);
                                         setSearchByUsername(false);
                                     }
 
                                     if (e.key === 'Enter') {
                                         getUserByUsername(searchQuery).then((userData) => {
-                                            console.log(userData);
                                             userData ? setFollowerData([userData]) : setFollowerData([]);
                                         });
                                     }
                                 }}
                                 onChange={(e) => {
+                                    if (e.target.value === '') {
+                                        setSearchStarted(false);
+                                    }
                                     setSearchQuery(e.target.value);
                                 }}
                                 autoFocus
@@ -56,27 +62,41 @@ const Explore: React.FC = () => {
                             className="w-full outline-none focus:outline-none"
                             value={searchQuery}
                             placeholder="Search"
+                            onFocusCapture={(e) => {
+                                if (e.target.value === '') {
+                                    setSearchStarted(false);
+                                }
+                            }}
                             onKeyUp={(e: any) => {
-                                setSearchStarted(true);
+                                if (e.target.value !== '') {
+                                    setSearchStarted(true);
+                                } else {
+                                    setSearchStarted(false);
+                                }
                                 if (e.key === 'Backspace' && e.target.value.length === 0) {
                                     setFollowerData([]);
-                                    setSearchStarted(false);
                                 }
                                 if (e.key === '@' && e.target.value.length === 1) {
                                     setSearchByUsername(true);
                                     setSearchQuery('');
                                 }
                                 if (e.key === ' ' || e.key === 'Enter') {
-                                    console.log(searchByUsername, searchQuery);
                                     getUsersByName(searchQuery).then((usersFound) => {
                                         if (usersFound.length !== 0) {
-                                            console.log(usersFound);
                                             setFollowerData(usersFound);
                                         }
                                     });
                                 }
                             }}
+                            onKeyDown={(e: any) => {
+                                if (e.target.value === '') {
+                                    setSearchStarted(true);
+                                }
+                            }}
                             onChange={(e) => {
+                                if (e.target.value === '') {
+                                    setSearchStarted(false);
+                                }
                                 setSearchQuery(e.target.value);
                             }}
                             autoFocus
